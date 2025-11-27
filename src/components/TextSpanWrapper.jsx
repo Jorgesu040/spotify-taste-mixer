@@ -1,8 +1,8 @@
-// El siguiente componente esta basado en el text wrap de https://landonorris.com/ y lo he replicado en React
+// El siguiente componente esta basado en el text wrap de la pagina https://landonorris.com/ y lo he replicado en React
 // He usado este video para parte del codigo https://www.youtube.com/watch?v=9H34nxxVEgc
 
 /**
- * Componente que aplica el efecto de deslizamiento de texto tipo Lando Norris.
+ * Componente que aplica el efecto de deslizamiento de texto como en la pagina de Lando Norris.
  * Utiliza dos capas por letra y CSS en línea para el retraso escalonado (staggering).
  */
 export default function TextSpanWrapper({ children }) {
@@ -28,10 +28,11 @@ export default function TextSpanWrapper({ children }) {
     const layerClasses = `
         block
         transition-transform duration-300 timing-custom-ease
+        motion-reduce:transition-none 
     `
 
     return (
-        <h1 className='group text-xl sm:text-2xl md:text-3xl lg:text-6xl font-extrabold uppercase mt-4 mb-1 text-white'>
+        <h1 aria-label={text} className='group text-xl sm:text-2xl md:text-3xl lg:text-6xl font-extrabold uppercase mt-4 mb-1 text-white'>
             {letters.map((segment, index) => {
                 const letter = segment.segment === ' ' ? '\u00A0' : segment.segment
 
@@ -53,6 +54,7 @@ export default function TextSpanWrapper({ children }) {
 
                         {/* -------------------- CAPA INFERIOR (Oculta, se desliza hacia arriba) -------------------- */}
                         <span
+                            aria-hidden="true"
                             className={`${layerClasses} group-hover:-translate-y-full`}
                             style={{ transitionDelay: delay }}
                         >

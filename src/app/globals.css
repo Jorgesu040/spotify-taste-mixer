@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
+/* Base system variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-geist-mono: "Inter", "sans-serif";
+  --radius: 0.625rem;
+  --primary: #171717;
+  --primary-foreground: #fafafa;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Dark mode override for base vars */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #fafafa;
+    --primary-foreground: #171717;
+    --secondary: #262626;
+    --secondary-foreground: #ededed;
+    --accent: #262626;
+    --accent-foreground: #ededed;
+    --border: #262626;
+    --input: #262626;
+    --ring: #d4d4d4;
   }
 }
 
+/* Map base vars to theme variables and define palette in one place */
+@layer theme {
+  @theme {
+    /* base mappings */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    /* Spotify palette */
+    --color-spotify-green: #1db954;
+    --color-spotify-green-light: #1ed760;
+    --color-spotify-gray-dark: #212121;
+    --color-spotify-gray-darker: #121212;
+    --color-spotify-gray-mid: #535353;
+    --color-spotify-gray-light: #b3b3b3;
+
+    --color-spotify-accent: #00A8FF;
+    --color-accent: var(--color-spotify-accent);
+    
+    /* Curva personalizada para TextSpanWrapper */
+    --timing-custom-ease: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+
+/* page styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

@@ -19,7 +19,7 @@ export const ThreeDMarquee = ({
         className
       )}>
       <div className="flex size-full items-center justify-center">
-        <div className="size-[1720px] shrink-0 scale-100  lg:scale-125 -translate-x-1/10 translate-y-1/9">
+        <div className="size-[1720px] shrink-0 scale-75 md:scale-100 lg:scale-125 translate-y-30 md:-translate-x-1/10 md:translate-y-1/9">
           <div
             style={{
               transform: "rotateX(55deg) rotateY(0deg) rotateZ(-45deg)",

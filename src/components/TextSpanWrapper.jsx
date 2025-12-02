@@ -5,7 +5,7 @@
  * Componente que aplica el efecto de deslizamiento de texto como en la pagina de Lando Norris.
  * Utiliza dos capas por letra y CSS en línea para el retraso escalonado (staggering).
  */
-export default function TextSpanWrapper({ children }) {
+export default function TextSpanWrapper({ children, makeSmall = false, className = '' }) {
     // 1. Segmenter: Divide el texto en caracteres de forma segura (incluyendo emojis)
     // Usa 'grapheme' para dividir correctamente emojis y caracteres compuestos
     const text = typeof children === 'string' ? children : String(children ?? '')
@@ -20,7 +20,7 @@ export default function TextSpanWrapper({ children }) {
     // Clase base para el contenedor de la animación (overflow: hidden y altura fija)
     const letterContainerClasses = `
         inline-block relative 
-        h-[1.2em] leading-none overflow-hidden
+        h-[1.25rem] sm:h-[1.5rem] ${!makeSmall ? ' md:h-[3rem] lg:h-[3.75rem]' : ''} leading-none overflow-hidden
         transition-colors duration-300
     `
 
@@ -32,7 +32,7 @@ export default function TextSpanWrapper({ children }) {
     `
 
     return (
-        <h1 aria-label={text} className='group text-xl sm:text-2xl md:text-3xl lg:text-6xl font-extrabold uppercase mt-4 mb-1 text-white'>
+        <h1 aria-label={text} className={`group text-xl sm:text-2xl ${!makeSmall ? ' md:text-5xl lg:text-6xl' : ''} font-extrabold uppercase text-white`}>
             {letters.map((segment, index) => {
                 const letter = segment.segment === ' ' ? '\u00A0' : segment.segment
 

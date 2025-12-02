@@ -61,21 +61,21 @@ export default function Home() {
     <div className="bg-gray-800 flex items-center flex-col justify-center min-h-screen relative">
       <ThreeDMarquee
         images={images}
-        className=" absolute z-0 inset-0 h-full w-full "
+        className="absolute z-0 inset-0 h-full w-full "
         offset={200}
       />
       <div className="pointer-events-none absolute inset-0 z-10 min-h-screen bg-black/80 dark:bg-black/30" />
       <CursorBlob
-        className="z-20 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg flex items-center flex-col justify-center bg-accent/50"
+        className="z-20 m-8 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg flex items-center flex-col justify-center bg-accent/50"
       >
-        <div className="relative p-8 md:p-16 lg:p-24 z-20 text-center flex items-center flex-col justify-center">
+        <div className="relative py-8 p-4 sm:p-8 md:p-16 lg:p-24 z-20 text-center flex items-center flex-col justify-center">
           <AudioLines animate size={64} />
-          <TextSpanWrapper>Spotify Taste Mixer</TextSpanWrapper>
+          <TextSpanWrapper className='mt-4 mb-1'>Spotify Taste Mixer</TextSpanWrapper>
           <p className="text-gray text-lg text-balance mb-8 text-center">
             Mezcla tu música favorita con artistas inesperados
           </p>
           <SpotifyBtnLogin onClick={handleLogin}>
-            Incia sesion con Spotify
+            Inicia sesion con Spotify
           </SpotifyBtnLogin>
         </div>
       </CursorBlob> 

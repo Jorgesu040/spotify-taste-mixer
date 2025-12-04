@@ -1,13 +1,13 @@
+'use client'
 
-'use client';
-
-import CursorBlob from "@/components/CursorBlob";
-import ArtistWidget from "@/components/widgets/ArtistWidget";
-import PopularityWidget from "@/components/widgets/PopularityWidget";
-import TrackWidget from "@/components/widgets/TrackWidget";
+import CursorBlob from "@/components/CursorBlob"
+import ArtistWidget from "@/components/widgets/ArtistWidget"
+import DecadeWidget from "@/components/widgets/DecadeWidget"
+import GenreWidget from "@/components/widgets/GenreWidget"
+import PopularityWidget from "@/components/widgets/PopularityWidget"
+import TrackWidget from "@/components/widgets/TrackWidget"
 
 export default function Dashboard() {
-
 
     return (
         <main className="min-h-screen bg-spotify-gray-darker p-2 sm:p-4 md:p-6 lg:p-8">
@@ -29,6 +29,16 @@ export default function Dashboard() {
                 <div className="relative z-1 bg-spotify-gray-dark rounded-lg p-4">
                     {/* Widget content */}
                     <PopularityWidget />
+                </div>
+
+                <div className="relative z-1 bg-spotify-gray-dark rounded-lg p-4">
+                    {/* Widget content */}
+                    <GenreWidget />
+                </div>
+
+                <div className="relative z-1 bg-spotify-gray-dark rounded-lg p-4">
+                    {/* Widget content */}
+                    <DecadeWidget />
                 </div>
             </CursorBlob>
 

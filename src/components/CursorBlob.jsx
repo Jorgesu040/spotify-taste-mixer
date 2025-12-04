@@ -5,6 +5,8 @@ import { motion, useMotionValue, useSpring } from 'motion/react'
 
 
 
+// Note to self: on for blob to not cover interactive elements: use relative positioning on children and z-index on interactive elements
+// See usage in src/app/dashboard/page.js (relative z-1 on children)
 export default function CursorBlob({ children, className = '' }) {
 
   const containerRef = useRef(null)

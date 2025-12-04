@@ -14,7 +14,17 @@ export async function fetchSearchArtist(artist) {
 }
 
 
+export async function fetchSearchTrack(track) {
 
+  const url = `https://api.spotify.com/v1/search?type=track&q=${track}`
+
+  const trackSearchResponse = await spotifyRequest(url)
+
+  console.log(trackSearchResponse)
+
+  return trackSearchResponse.tracks.items
+
+}
 
 export async function fetchArtistTopTracks(artist, market = 'ES') {
 

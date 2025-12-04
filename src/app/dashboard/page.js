@@ -3,6 +3,7 @@
 
 import CursorBlob from "@/components/CursorBlob";
 import ArtistWidget from "@/components/widgets/ArtistWidget";
+import PopularityWidget from "@/components/widgets/PopularityWidget";
 import TrackWidget from "@/components/widgets/TrackWidget";
 
 export default function Dashboard() {
@@ -23,6 +24,11 @@ export default function Dashboard() {
                 <div className="relative z-1 bg-spotify-gray-dark rounded-lg p-4">
                     {/* Widget content */}
                     <TrackWidget />
+                </div>
+
+                <div className="relative z-1 bg-spotify-gray-dark rounded-lg p-4">
+                    {/* Widget content */}
+                    <PopularityWidget />
                 </div>
             </CursorBlob>
 

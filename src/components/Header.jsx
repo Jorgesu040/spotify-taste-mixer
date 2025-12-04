@@ -1,6 +1,5 @@
 "use client";
 
-import { Menu } from "lucide-react"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { useState, useEffect } from "react"
 import SpotifyBtn from "@/components/SpotifyBtn"

@@ -6,6 +6,8 @@ import SpotifyBtn from "@/components/SpotifyBtn"
 import { logout } from "@/lib/auth"
 import { useRouter } from "next/navigation"
 import { isAuthenticated } from "@/lib/auth"
+import { fetchCurrentUserProfile } from "@/lib/spotifyFetch"
+import Image from "next/image"
 
 export default function SiteHeader() {
 
@@ -13,6 +15,7 @@ export default function SiteHeader() {
 
     // Avoid hydration mismatch: start with `null` (unknown) and determine auth only on the client
     const [authenticated, setAuthenticated] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         // Only run authentication checks on the client
@@ -24,6 +27,11 @@ export default function SiteHeader() {
         if (!auth) {
             // Redirect to home/login if not authenticated
             router.replace('/');
+        } else {
+            // Fetch user profile when authenticated
+            fetchCurrentUserProfile()
+                .then(profile => setUser(profile))
+                .catch(err => console.error('Error fetching user profile:', err));
         }
     }, [router]);
 
@@ -51,10 +59,28 @@ export default function SiteHeader() {
                     <TextSpanWrapper makeSmall={true}>Dashboard</TextSpanWrapper>
                 </aside>
                 
-                <nav className={`md:flex`}>
-                    
+                <nav className="flex items-center gap-4">
+                    {user && (
+                        <div className="flex items-center gap-3">
+                            {user.images?.[0]?.url ? (
+                                <Image
+                                    src={user.images[0].url}
+                                    alt={user.display_name || 'User'}
+                                    width={32}
+                                    height={32}
+                                    className="rounded-full"
+                                />
+                            ) : (
+                                <div className="w-8 h-8 rounded-full bg-spotify-green flex items-center justify-center text-black font-bold text-sm">
+                                    {user.display_name?.[0]?.toUpperCase() || '?'}
+                                </div>
+                            )}
+                            <span className="text-foreground text-sm hidden sm:block">
+                                {user.display_name}
+                            </span>
+                        </div>
+                    )}
                     <SpotifyBtn onClick={handleLogout}>Logout</SpotifyBtn>
-                    
                 </nav>
             </header>
         </>

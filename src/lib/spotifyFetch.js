@@ -37,6 +37,20 @@ export async function fetchArtistTopTracks(artist, market = 'ES') {
   return artistTopTracks.tracks
 }
 
+// Fetch current user profile
+export async function fetchCurrentUserProfile() {
+  const url = 'https://api.spotify.com/v1/me'
+  const userProfile = await spotifyRequest(url)
+  return userProfile
+}
+
+
+// Fetch user profile by ID
+export async function fetchUserProfile(userId) {
+  const url = `https://api.spotify.com/v1/users/${userId}`
+  const userProfile = await spotifyRequest(url)
+  return userProfile
+}
 
 // Helper function 
 async function spotifyRequest(url) {

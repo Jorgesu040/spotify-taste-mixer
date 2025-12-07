@@ -37,6 +37,16 @@ export async function fetchArtistTopTracks(artist, market = 'ES') {
   return artistTopTracks.tracks
 }
 
+
+export async function fetchSearchTracksByYear(startYear, endYear = null, limit = 20) {
+  const yearQuery = endYear ? `${startYear}-${endYear}` : `${startYear}`
+  const url = `https://api.spotify.com/v1/search?type=track&q=year:${yearQuery}&limit=${limit}`
+  const trackSearchResponse = await spotifyRequest(url)
+  console.log(trackSearchResponse)
+  return trackSearchResponse.tracks.items
+}
+
+
 // Fetch current user profile
 export async function fetchCurrentUserProfile() {
   const url = 'https://api.spotify.com/v1/me'

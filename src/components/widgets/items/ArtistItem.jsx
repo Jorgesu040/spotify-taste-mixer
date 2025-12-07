@@ -9,13 +9,15 @@ export default function ArtistItem({ children }) {
     return (
         <div className="flex flex-col items-center p-4 rounded-lg bg-spotify-gray-dark hover:bg-spotify-gray-mid transition-colors cursor-pointer">
             {artist.images?.[0]?.url ? (
-                <Image 
-                    src={artist.images[0].url} 
-                    alt={artist.name}
-                    width={150}
-                    height={150}
-                    className="rounded-full object-cover"
-                />
+                <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
+                    <Image 
+                        src={artist.images[0].url} 
+                        alt={artist.name}
+                        width={150}
+                        height={150}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
             ) : (
                 <div className="w-[150px] h-[150px] rounded-full bg-spotify-gray-mid flex items-center justify-center">
                     <span className="text-spotify-gray-light text-4xl">?</span>

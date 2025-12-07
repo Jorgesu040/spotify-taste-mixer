@@ -15,13 +15,15 @@ export default function TrackItem({ children }) {
     return (
         <div className="flex flex-col items-center p-4 rounded-lg bg-spotify-gray-dark hover:bg-spotify-gray-mid transition-colors cursor-pointer">
             {track.album?.images?.[0]?.url ? (
-                <Image 
-                    src={track.album.images[0].url} 
-                    alt={track.name}
-                    width={150}
-                    height={150}
-                    className="rounded-md object-cover"
-                />
+                <div className="w-[150px] h-[150px] rounded-md overflow-hidden">
+                    <Image 
+                        src={track.album.images[0].url} 
+                        alt={track.name}
+                        width={150}
+                        height={150}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
             ) : (
                 <div className="w-[150px] h-[150px] rounded-md bg-spotify-gray-mid flex items-center justify-center">
                     <span className="text-spotify-gray-light text-4xl">?</span>

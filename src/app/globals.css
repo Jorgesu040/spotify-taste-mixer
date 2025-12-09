@@ -2,36 +2,19 @@
 
 /* Base system variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
   --font-geist-mono: "Inter", "sans-serif";
   --radius: 0.625rem;
-  --primary: #171717;
-  --primary-foreground: #fafafa;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --accent: #f5f5f5;
-  --accent-foreground: #171717;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #171717;
-}
-
-/* Dark mode override for base vars */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #fafafa;
-    --primary-foreground: #171717;
-    --secondary: #262626;
-    --secondary-foreground: #ededed;
-    --accent: #262626;
-    --accent-foreground: #ededed;
-    --border: #262626;
-    --input: #262626;
-    --ring: #d4d4d4;
-  }
+  --primary: #fafafa;
+  --primary-foreground: #171717;
+  --secondary: #262626;
+  --secondary-foreground: #ededed;
+  --accent: #262626;
+  --accent-foreground: #ededed;
+  --border: #262626;
+  --input: #262626;
+  --ring: #d4d4d4;
 }
 
 /* Map base vars to theme variables and define palette in one place */
@@ -53,7 +36,7 @@
 
     --color-spotify-accent: #00A8FF;
     --color-accent: var(--color-spotify-accent);
-    
+
     /* Curva personalizada para TextSpanWrapper */
     --timing-custom-ease: cubic-bezier(0.19, 1, 0.22, 1);
   }
@@ -88,6 +71,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

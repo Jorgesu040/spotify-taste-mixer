@@ -5,9 +5,10 @@ import { Calendar, } from "lucide-react"
 import DecadeItem from "./items/DecadeItem"
 import SpotifyBtn from "../SpotifyBtn"
 
-export default function DecadeWidget({ onSelect, className }) {
-    const [startDecade, setStartDecade] = useState("")
-    const [endDecade, setEndDecade] = useState("")
+export default function DecadeWidget({ onSelect, selectedRange, className }) {
+    // Use selectedRange as initial value, then manage locally for editing
+    const [startDecade, setStartDecade] = useState(selectedRange.start.toString() ?? "")
+    const [endDecade, setEndDecade] = useState(selectedRange.end.toString() ?? "")
 
     // Generate decades from 1900 to current decade
     const decades = useMemo(() => {

@@ -32,7 +32,7 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
     }
 
     return (
-        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
+        <section className={`w-full h-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
             <div className="flex justify-between items-center mb-4">
                 <TextSpanWrapper makeSmall>Pistas</TextSpanWrapper>
                 <Music className="text-spotify-gray-light" size={20} />

@@ -59,7 +59,7 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
     const isSelected = (trackId) => Array.isArray(selectedItems) && selectedItems.some(t => t.id === trackId)
 
     return (
-        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
+        <section className={`w-full h-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             <div className="flex justify-between items-center mb-4">
                 <TextSpanWrapper makeSmall>Décadas</TextSpanWrapper>
                 <Calendar className="text-spotify-gray-light" size={20} />

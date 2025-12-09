@@ -84,7 +84,7 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
     }, [activeTab, timeRange])
 
     return (
-        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
+        <section className={`w-full h-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
                 <TextSpanWrapper makeSmall>Tu Top</TextSpanWrapper>

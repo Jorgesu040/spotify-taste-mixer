@@ -13,7 +13,7 @@ export default function PopularityWidget({ onSelect, selectedRange = [20, 80], c
     }
 
     return (
-        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
+        <section className={`w-full h-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
                 <TextSpanWrapper makeSmall>Popularidad</TextSpanWrapper>

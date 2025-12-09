@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from "react"
 import CursorBlob from "@/components/CursorBlob"
 import WidgetWrapper from "@/components/WidgetWrapper"
 import PlaylistPanel from "@/components/PlaylistPanel"
@@ -10,6 +11,7 @@ import GenreWidget from "@/components/widgets/GenreWidget"
 import PopularityWidget from "@/components/widgets/PopularityWidget"
 import TopWidget from "@/components/widgets/TopWidget"
 import TrackWidget from "@/components/widgets/TrackWidget"
+import WidgetLimitPopup from "@/components/WidgetLimitPopup"
 import { usePlaylistContext } from "@/hooks/usePlaylistContext"
 import { useFilter } from "@/hooks/useFilter"
 
@@ -17,6 +19,7 @@ export default function Dashboard() {
 
     const [ [selectedTracks, selectedArtists, selectedGenres], [setSelectedTracks, setSelectedArtists, setSelectedGenres] ] = usePlaylistContext()
     const [ [popularityRange], [setPopularityRange] ] = useFilter()
+    const [limitError, setLimitError] = useState(null)
 
     // Remove a track from the playlist
     const removeTrack = (trackId) => {
@@ -38,15 +41,15 @@ export default function Dashboard() {
             {/* Widgets grid - 4 columns */}
             <CursorBlob  className=" p-4 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 items-stretch bg-accent/50">
                 <WidgetWrapper cols={1} storageKey="widget-artist-cols">
-                    <ArtistWidget onSelect={setSelectedArtists} selectedItems={selectedArtists}/>
+                    <ArtistWidget onSelect={setSelectedArtists} selectedItems={selectedArtists} onLimitError={setLimitError}/>
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={1} storageKey="widget-track-cols">
-                    <TrackWidget onSelect={setSelectedTracks} selectedItems={selectedTracks}/>
+                    <TrackWidget onSelect={setSelectedTracks} selectedItems={selectedTracks} onLimitError={setLimitError}/>
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={1} storageKey="widget-genre-cols">
-                    <GenreWidget onSelect={setSelectedGenres} selectedItems={selectedGenres}/>
+                    <GenreWidget onSelect={setSelectedGenres} selectedItems={selectedGenres} onLimitError={setLimitError}/>
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={3} storageKey="widget-top-cols">
@@ -55,6 +58,7 @@ export default function Dashboard() {
                         onSelectTrack={setSelectedTracks}
                         selectedArtists={selectedArtists}
                         selectedTracks={selectedTracks}
+                        onLimitError={setLimitError}
                     />
                 </WidgetWrapper>
 
@@ -78,6 +82,7 @@ export default function Dashboard() {
                 />
             </div>
 
+            <WidgetLimitPopup message={limitError} onClose={() => setLimitError(null)} duration={4000} />
         </main>
     )
 }

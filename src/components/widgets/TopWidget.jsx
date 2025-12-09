@@ -8,7 +8,7 @@ import ArtistItem from "./items/ArtistItem"
 import TrackItem from "./items/TrackItem"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 
-export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTracks = [], selectedArtists = [], className, maxArtists = 5, maxTracks = 20 }) {
+export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTracks = [], selectedArtists = [], className, maxArtists = 5, maxTracks = 20, onLimitError }) {
     const [activeTab, setActiveTab] = useState('artists') // 'artists' | 'tracks'
     const [timeRange, setTimeRange] = useState('medium_term') // short_term | medium_term | long_term
     const [topArtists, setTopArtists] = useState([])
@@ -40,8 +40,8 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
             const newSelected = [...artists, artist]
             onSelectArtist(newSelected)
         } else {
-            // TODO: use popup notification system
-            alert(`You can select up to ${maxArtists} artists.`)
+            // show popup notification for limit
+            if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxArtists} artistas.`)
         }
     }
 
@@ -56,8 +56,8 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
             const newSelected = [...tracks, track]
             onSelectTrack(newSelected)
         } else {
-            // TODO: use popup notification system
-            alert(`You can select up to ${maxTracks} tracks.`)
+            // show popup notification for limit
+            if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxTracks} pistas.`)
         }
     }
 

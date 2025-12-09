@@ -7,7 +7,7 @@ import ArtistItem from "@/components/widgets/items/ArtistItem"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { Search, User } from "lucide-react"
 
-export default function ArtistWidget({ onSelect, selectedItems = [], className, maxItems = 5 }) {
+export default function ArtistWidget({ onSelect, selectedItems = [], className, maxItems = 5, onLimitError }) {
 
     const [response, setResponse] = useState([])
     const items = Array.isArray(selectedItems) ? selectedItems : []
@@ -26,8 +26,8 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
             const newSelected = [...items, artist]
             onSelect(newSelected)
         } else {
-            // TODO: use popup notification system
-            alert(`You can select up to ${maxItems} artists.`)
+            // show popup notification for limit
+            if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxItems} artistas.`)
         }
     }
 

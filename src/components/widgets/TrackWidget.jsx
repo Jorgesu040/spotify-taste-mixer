@@ -7,7 +7,7 @@ import TrackItem from "@/components/widgets/items/TrackItem"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { Search, Music } from "lucide-react"
 
-export default function TrackWidget({ onSelect, selectedItems = [], className, maxItems = 20 }) {
+export default function TrackWidget({ onSelect, selectedItems = [], className, maxItems = 20, onLimitError }) {
 
     const [response, setResponse] = useState([])
     const items = Array.isArray(selectedItems) ? selectedItems : []
@@ -26,8 +26,8 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
             const newSelected = [...items, track]
             onSelect(newSelected)
         } else {
-            // TODO: use popup notification system
-            alert(`You can select up to ${maxItems} tracks.`)
+            // show popup notification for limit
+            if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxItems} pistas.`)
         }
     }
 

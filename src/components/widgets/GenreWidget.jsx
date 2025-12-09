@@ -8,7 +8,7 @@ import GenreItem from './items/GenreItem'
 import TextSpanWrapper from '@/components/TextSpanWrapper'
 import { Search, Palette } from 'lucide-react'
 
-export default function GenreWidget({ onSelect, selectedItems, className, maxItems = 5 }) {
+export default function GenreWidget({ onSelect, selectedItems, className, maxItems = 5, onLimitError }) {
     const [response, setResponse] = useState([])
     
     // selectedItems is an array of genre strings (e.g. ["pop", "rock"])
@@ -27,8 +27,8 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
             const newSelected = [...items, genre]
             onSelect(newSelected)
         } else {
-            // TODO: use popup notification system
-            alert(`You can select up to ${maxItems} genres.`)
+            // show popup notification for limit
+            if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxItems} géneros.`)
         }
     }
 

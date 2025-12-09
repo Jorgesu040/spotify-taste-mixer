@@ -4,6 +4,8 @@ import { useState } from "react"
 import SearchBar from "@/components/SearchBar"
 import { fetchSearchTrack } from "@/lib/spotifyFetch"
 import TrackItem from "@/components/widgets/items/TrackItem"
+import TextSpanWrapper from "@/components/TextSpanWrapper"
+import { Search, Music } from "lucide-react"
 
 export default function TrackWidget({ onSelect, selectedItems = [], className, maxItems = 20 }) {
 
@@ -30,9 +32,10 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
     }
 
     return (
-        <section className={`w-full bg-spotify-gray-dark rounded-lg p-4 ${className} `}>
+        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-foreground font-semibold">Buscar pistas</h2>
+                <TextSpanWrapper makeSmall>Pistas</TextSpanWrapper>
+                <Music className="text-spotify-gray-light" size={20} />
             </div>
 
             <SearchBar
@@ -41,10 +44,19 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
                 fnToCall={fetchSearchTrack}
             />
 
-            <div className="grid grid-cols-1   gap-2 mt-4 max-h-[400px] overflow-y-auto">
-                {response.map((item) => (
-                    <TrackItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</TrackItem>
-                ))}
+            <div className="flex-1 flex flex-col">
+                {response.length === 0 ? (
+                    <div className="flex-1 flex flex-col items-center justify-center text-spotify-gray-light">
+                        <Search size={48} className="opacity-50 mb-2" />
+                        <p>Escribe para buscar</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 gap-2 mt-4 max-h-[350px] overflow-y-auto">
+                        {response.map((item) => (
+                            <TrackItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</TrackItem>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     )

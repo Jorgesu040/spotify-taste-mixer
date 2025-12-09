@@ -4,6 +4,8 @@ import { useState } from "react"
 import SearchBar from "@/components/SearchBar"
 import { fetchSearchArtist } from "@/lib/spotifyFetch"
 import ArtistItem from "@/components/widgets/items/ArtistItem"
+import TextSpanWrapper from "@/components/TextSpanWrapper"
+import { Search, User } from "lucide-react"
 
 export default function ArtistWidget({ onSelect, selectedItems = [], className, maxItems = 5 }) {
 
@@ -30,9 +32,10 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
     }
 
     return (
-        <section className={`w-full bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
+        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-foreground font-semibold">Buscar artistas</h2>
+                <TextSpanWrapper makeSmall>Artistas</TextSpanWrapper>
+                <User className="text-spotify-gray-light" size={20} />
             </div>
 
             <SearchBar
@@ -41,10 +44,19 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
                 fnToCall={fetchSearchArtist}
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-4 max-h-[400px] overflow-y-auto">
-                {response.map((item) => (
-                    <ArtistItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</ArtistItem>
-                ))}
+            <div className="flex-1 flex flex-col">
+                {response.length === 0 ? (
+                    <div className="flex-1 flex flex-col items-center justify-center text-spotify-gray-light">
+                        <Search size={48} className="opacity-50 mb-2" />
+                        <p>Escribe para buscar</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4 max-h-[350px] overflow-y-auto">
+                        {response.map((item) => (
+                            <ArtistItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</ArtistItem>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     )

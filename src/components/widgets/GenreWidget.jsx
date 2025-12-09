@@ -5,6 +5,8 @@ import SearchBar from '@/components/SearchBar'
 import Fuse from 'fuse.js'
 import generes from '@/generes/generes.json'
 import GenreItem from './items/GenreItem'
+import TextSpanWrapper from '@/components/TextSpanWrapper'
+import { Search, Palette } from 'lucide-react'
 
 export default function GenreWidget({ onSelect, selectedItems, className, maxItems = 5 }) {
     const [response, setResponse] = useState([])
@@ -52,9 +54,10 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
     }
 
     return (
-        <section className={`w-full bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
+        <section className={`w-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-foreground font-semibold">Buscar géneros</h2>
+                <TextSpanWrapper makeSmall>Géneros</TextSpanWrapper>
+                <Palette className="text-spotify-gray-light" size={20} />
             </div>
 
             <SearchBar
@@ -63,12 +66,21 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
                 fnToCall={fnToCall}
             />
 
-            <div className="flex flex-wrap content-start ali gap-2 mt-4 max-h-[400px] min-h-[400px] overflow-y-auto">
-                {response.map((genre, idx) => (
-                    <GenreItem key={`${genre}-${idx}`} onSelect={() => handleSelect(genre)} isSelected={isSelected(genre)}>
-                        {genre}
-                    </GenreItem>
-                ))}
+            <div className="flex-1 flex flex-col">
+                {response.length === 0 ? (
+                    <div className="flex-1 flex flex-col items-center justify-center text-spotify-gray-light">
+                        <Search size={48} className="opacity-50 mb-2" />
+                        <p>Escribe para buscar</p>
+                    </div>
+                ) : (
+                    <div className="flex flex-wrap content-start gap-2 mt-4 max-h-[350px] overflow-y-auto">
+                        {response.map((genre, idx) => (
+                            <GenreItem key={`${genre}-${idx}`} onSelect={() => handleSelect(genre)} isSelected={isSelected(genre)}>
+                                {genre}
+                            </GenreItem>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     )

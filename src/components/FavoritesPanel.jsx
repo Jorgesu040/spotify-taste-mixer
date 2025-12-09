@@ -33,16 +33,16 @@ export default function FavoritesPanel({ favorites = [], onAddToPlaylist, onRemo
                 <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
                     {favorites.map((track) => (
                         <div key={track.id} className="group relative">
-                            <TrackItem 
+                            <TrackItem
                                 bg="bg-spotify-gray-mid"
                                 onSelect={() => handleAddToPlaylist(track)}
                                 isSelected={false}
                             >
                                 {track}
                             </TrackItem>
-                            
+
                             {/* Overlay actions */}
-                            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                                 {onAddToPlaylist && (
                                     <button
                                         onClick={() => {

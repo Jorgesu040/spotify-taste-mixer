@@ -37,7 +37,7 @@ export default function DecadeWidget({ onSelect, className }) {
     }
 
     return (
-        <section className={`bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
+        <section className={`w-full bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-foreground font-bold text-xl">Décadas</h2>
                 <Calendar className="text-foreground" size={24} />

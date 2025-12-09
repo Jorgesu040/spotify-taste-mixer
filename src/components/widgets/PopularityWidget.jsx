@@ -1,4 +1,3 @@
-// TODO PopularityWidget
 'use client'
 
 import { Slider } from "@/components/ui/slider"
@@ -47,7 +46,7 @@ export default function PopularityWidget({ onChange, selectedRange, className, d
 
 
     return (
-        <section className={`bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
+        <section className={`w-full bg-spotify-gray-dark rounded-lg p-4 ${className}`}>
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-foreground font-semibold">Popularity</h2>

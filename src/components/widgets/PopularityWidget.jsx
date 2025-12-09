@@ -21,7 +21,7 @@ export default function PopularityWidget({ onSelect, selectedRange = [20, 80], c
             </div>
 
             {/* Content wrapper */}
-            <div className="flex-1 flex flex-col justify-center">
+            <div className="flex-1 flex flex-col justify-center px-2">
                 <p className="text-spotify-gray-light text-sm mb-4">
                     De las canciones selecionadas, filtra por popularidad:
                 </p>

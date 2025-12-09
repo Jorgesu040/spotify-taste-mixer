@@ -139,7 +139,7 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
             <div className="flex-1 flex flex-col">
                 {/* Artists List */}
                 {activeTab === 'artists' && (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[340px] overflow-y-auto">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[340px] overflow-y-auto p-2">
                         {topArtists.map((artist, index) => (
                             <ArtistItem
                                 key={artist.id}
@@ -159,7 +159,7 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
 
                 {/* Tracks List */}
                 {activeTab === 'tracks' && (
-                    <div className="flex flex-col gap-2 max-h-[340px] overflow-y-auto">
+                    <div className="flex flex-col gap-2 max-h-[340px] overflow-y-auto p-2">
                         {topTracks.map((track, index) => (
                             <TrackItem
                                 key={track.id}

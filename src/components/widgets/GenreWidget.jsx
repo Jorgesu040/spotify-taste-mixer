@@ -10,7 +10,7 @@ import { Search, Palette } from 'lucide-react'
 
 export default function GenreWidget({ onSelect, selectedItems, className, maxItems = 5, onLimitError }) {
     const [response, setResponse] = useState([])
-    
+
     // selectedItems is an array of genre strings (e.g. ["pop", "rock"])
     const items = Array.isArray(selectedItems) ? selectedItems : []
     const isSelected = (genre) => items.includes(genre)
@@ -22,7 +22,7 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
             const newSelected = items.filter(g => g !== genre)
             onSelect(newSelected)
             return
-        // Case 2: selecting
+            // Case 2: selecting
         } else if (canAddMore) {
             const newSelected = [...items, genre]
             onSelect(newSelected)
@@ -73,7 +73,7 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
                         <p>Escribe para buscar</p>
                     </div>
                 ) : (
-                    <div className="flex flex-wrap content-start gap-2 mt-4 max-h-[350px] overflow-y-auto">
+                    <div className="flex flex-wrap content-start gap-2 mt-4 max-h-[350px] overflow-y-auto p-2">
                         {response.map((genre, idx) => (
                             <GenreItem key={`${genre}-${idx}`} onSelect={() => handleSelect(genre)} isSelected={isSelected(genre)}>
                                 {genre}

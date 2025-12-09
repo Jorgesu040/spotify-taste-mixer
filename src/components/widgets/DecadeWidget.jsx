@@ -96,7 +96,7 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
             {/* Results or empty state */}
             <div className="flex-1 flex flex-col mt-4">
                 {results.length > 0 ? (
-                    <div className="space-y-2 max-h-[250px] overflow-y-auto">
+                    <div className="space-y-2 max-h-[250px] overflow-y-auto p-2">
                         {results.map(track => (
                             <TrackItem
                                 key={track.id}

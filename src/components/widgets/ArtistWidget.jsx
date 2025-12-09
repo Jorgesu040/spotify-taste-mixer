@@ -21,7 +21,7 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
             const newSelected = items.filter(item => item.id !== artist.id)
             onSelect(newSelected)
             return
-        // Case 2: selecting
+            // Case 2: selecting
         } else if (canAddMore) {
             const newSelected = [...items, artist]
             onSelect(newSelected)
@@ -51,7 +51,7 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
                         <p>Escribe para buscar</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4 max-h-[350px] overflow-y-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4 max-h-[350px] overflow-y-auto p-2">
                         {response.map((item) => (
                             <ArtistItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</ArtistItem>
                         ))}

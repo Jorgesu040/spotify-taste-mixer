@@ -51,7 +51,7 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
                         <p>Escribe para buscar</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 gap-2 mt-4 max-h-[350px] overflow-y-auto">
+                    <div className="grid grid-cols-1 gap-2 mt-4 max-h-[350px] overflow-y-auto p-2">
                         {response.map((item) => (
                             <TrackItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</TrackItem>
                         ))}

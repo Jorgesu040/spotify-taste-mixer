@@ -13,7 +13,7 @@ function SearchBar({ fnToCall, persistKey, setResponse, children = "Escribe para
         if (persistKey) {
             try {
                 const saved = localStorage.getItem(persistKey)
-                return saved
+                return saved || ''
             } catch (e) {
                 console.error('Error loading persisted search value', e)
             }
@@ -49,7 +49,7 @@ function SearchBar({ fnToCall, persistKey, setResponse, children = "Escribe para
     }
 
     return (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-spotify-gray-dark border border-spotify-gray-mid focus-within:border-spotify-green transition-colors" role="search">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-spotify-gray-dark border border-spotify-gray-mid focus-within:border-spotify-green transition-colors min-w-0" role="search">
 
             <Search className="text-spotify-gray-light shrink-0" aria-hidden size={18} />
             <span className="text-spotify-gray-mid" aria-hidden>|</span>
@@ -60,7 +60,7 @@ function SearchBar({ fnToCall, persistKey, setResponse, children = "Escribe para
                 placeholder={children}
                 name="text"
                 aria-label="Busqueda"
-                className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-spotify-gray-light"
+                className="flex-1 min-w-0 bg-transparent border-none outline-none text-foreground placeholder:text-spotify-gray-light"
             />
 
         </div>

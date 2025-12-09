@@ -28,7 +28,7 @@ export default function WidgetWrapper({ children, cols = 1, storageKey }) {
   }[currentCols]
 
   return (
-    <div className={`relative z-1 w-full h-full ${colsClass}`}>
+    <div className={`relative z-1 w-full h-full min-w-0 ${colsClass}`}>
       {/* Column size selector */}
       {storageKey && (
         <div className="absolute bottom-2 right-2 hidden md:flex gap-1 bg-spotify-gray-darker/80 rounded-full p-2 z-20">
@@ -46,7 +46,7 @@ export default function WidgetWrapper({ children, cols = 1, storageKey }) {
           ))}
         </div>
       )}
-      <div className="h-full">
+      <div className="h-full min-w-0">
         {children}
       </div>
     </div>

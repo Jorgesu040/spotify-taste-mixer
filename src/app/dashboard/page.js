@@ -129,7 +129,7 @@ export default function Dashboard() {
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={2} storageKey="widget-decade-cols">
-                    <DecadeWidget onSelect={handleGenreSelect} selectedItems={selectedTracks} />
+                    <DecadeWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} />
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={1} storageKey="widget-popularity-cols">

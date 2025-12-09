@@ -1,38 +1,65 @@
 'use client'
 
-
 import Image from "next/image"
+import { User } from "lucide-react"
 
-export default function ArtistItem({ children }) {
+export default function ArtistItem({ 
+    children, 
+    onSelect, 
+    isSelected, 
+    rank, 
+    showFollowers = true, 
+    showGenres = true,
+    size = 'large',
+    bg = 'bg-spotify-gray-dark'
+}) {
     const artist = children
+    
+    const isSmall = size === 'small'
+    const imageSize = isSmall ? 64 : 150
+    const imageSizeClass = isSmall ? 'w-16 h-16' : 'w-[150px] h-[150px]'
+    const paddingClass = isSmall ? 'p-3' : 'p-4'
 
     return (
-        <div className="flex flex-col items-center p-4 rounded-lg bg-spotify-gray-dark hover:bg-spotify-gray-mid transition-colors cursor-pointer">
-            {artist.images?.[0]?.url ? (
-                <div className="w-[150px] h-[150px] rounded-full overflow-hidden">
-                    <Image 
-                        src={artist.images[0].url} 
-                        alt={artist.name}
-                        width={150}
-                        height={150}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-            ) : (
-                <div className="w-[150px] h-[150px] rounded-full bg-spotify-gray-mid flex items-center justify-center">
-                    <span className="text-spotify-gray-light text-4xl">?</span>
-                </div>
-            )}
+        <div 
+            className={`flex flex-col items-center ${paddingClass} rounded-lg ${bg} hover:bg-spotify-gray-mid transition-colors cursor-pointer ${isSelected ? 'ring-2 ring-spotify-green' : ''}`} 
+            onClick={() => onSelect(artist)}
+        >
+            {/* Imagen con badge de rango opcional para TopWidget */}
+            <div className="relative">
+                {rank && (
+                    <span className="absolute -top-1 -left-1 bg-spotify-green text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center z-10">
+                        {rank}
+                    </span>
+                )}
+                {artist.images?.[0]?.url ? (
+                    <div className={`${imageSizeClass} rounded-full overflow-hidden`}>
+                        <Image 
+                            src={artist.images[0].url} 
+                            alt={artist.name}
+                            width={imageSize}
+                            height={imageSize}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                ) : (
+                    <div className={`${imageSizeClass} rounded-full bg-spotify-gray-mid flex items-center justify-center`}>
+                        <User size={isSmall ? 24 : 48} className="text-spotify-gray-light" />
+                    </div>
+                )}
+            </div>
             
-            <h2 className="mt-3 text-foreground font-semibold text-center truncate w-full">
+            <h2 className={`mt-${isSmall ? '2' : '3'} text-foreground font-semibold text-center truncate w-full ${isSmall ? 'text-xs' : ''}`}>
                 {artist.name}
             </h2>
             
-            <p className="text-spotify-gray-light text-sm">
-                {artist.followers?.total?.toLocaleString()} followers
-            </p>
+            {showFollowers && artist.followers?.total != null && (
+                <p className="text-spotify-gray-light text-sm">
+                    {artist.followers.total.toLocaleString()} followers
+                </p>
+            )}
             
-            {artist.genres?.length > 0 && (
+            {showGenres && artist.genres?.length > 0 && (
                 <p className="text-spotify-green text-xs mt-1 truncate w-full text-center">
                     {artist.genres.slice(0, 2).join(', ')}
                 </p>

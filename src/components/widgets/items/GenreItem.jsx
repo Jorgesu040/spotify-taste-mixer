@@ -1,10 +1,10 @@
 'use client'
 
-export default function GenreItem({ children }) {
+export default function GenreItem({ children, onSelect, isSelected }) {
     const text = typeof children === 'string' ? children : String(children)
 
     return (
-        <div className="inline-block hover:shadow-[inset_-5px_-10px_10px_-5px_rgba(128,128,128,0.3)] backdrop-blur-md bg-spotify-gray-darker/50 text-white rounded-md px-3 py-2 transition ease-in-out duration-200 cursor-pointer">
+        <div className={`inline-block hover:shadow-[inset_-5px_-10px_10px_-5px_rgba(128,128,128,0.3)] backdrop-blur-md bg-spotify-gray-darker/50 text-white rounded-md px-3 py-2 transition ease-in-out duration-200 cursor-pointer ${isSelected ? 'ring-2 ring-spotify-green' : ''}`} onClick={onSelect}>
             {text}
         </div>
     )

@@ -62,6 +62,25 @@ export async function fetchUserProfile(userId) {
   return userProfile
 }
 
+
+// Fetch user's top artists
+// timeRange: 'short_term' (4 weeks), 'medium_term' (6 months), 'long_term' (all time)
+export async function fetchUserTopArtists(timeRange = 'medium_term', limit = 20) {
+  const url = `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}&limit=${limit}`
+  const response = await spotifyRequest(url)
+  return response.items
+}
+
+
+// Fetch user's top tracks
+// timeRange: 'short_term' (4 weeks), 'medium_term' (6 months), 'long_term' (all time)
+export async function fetchUserTopTracks(timeRange = 'medium_term', limit = 20) {
+  const url = `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=${limit}`
+  const response = await spotifyRequest(url)
+  return response.items
+}
+
+
 // Helper function 
 async function spotifyRequest(url) {
   // Get current token and try to refresh if missing or expired

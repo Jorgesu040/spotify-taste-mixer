@@ -42,7 +42,7 @@ export default function Dashboard() {
         addFavoriteToPlaylist,
     } = usePlaylistContext()
     
-    const [ [popularityRange], [setPopularityRange] ] = useFilter()
+    const [[popularityRange], [setPopularityRange]] = useFilter()
     const [limitError, setLimitError] = useState(null)
     
     // Shared favorites state - initialized from localStorage
@@ -105,17 +105,17 @@ export default function Dashboard() {
         <main className="min-h-screen bg-spotify-gray-darker p-2 sm:p-4 md:p-6 lg:p-8">
 
             {/* Widgets grid - 4 columns */}
-            <CursorBlob  className=" p-4 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch bg-accent/50">
+            <CursorBlob className=" p-4 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch bg-accent/50">
                 <WidgetWrapper cols={1} storageKey="widget-artist-cols">
-                    <ArtistWidget onSelect={handleArtistSelect} selectedItems={selectedArtists} onLimitError={setLimitError}/>
+                    <ArtistWidget onSelect={handleArtistSelect} selectedItems={selectedArtists} onLimitError={setLimitError} />
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={1} storageKey="widget-track-cols">
-                    <TrackWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} onLimitError={setLimitError}/>
+                    <TrackWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} onLimitError={setLimitError} />
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={1} storageKey="widget-genre-cols">
-                    <GenreWidget onSelect={handleGenreSelect} selectedItems={selectedGenres} onLimitError={setLimitError}/>
+                    <GenreWidget onSelect={handleGenreSelect} selectedItems={selectedGenres} onLimitError={setLimitError} />
                 </WidgetWrapper>
 
                 <WidgetWrapper cols={3} storageKey="widget-top-cols">

@@ -5,43 +5,48 @@ import { useRouter } from 'next/navigation';
 import { isAuthenticated, getSpotifyAuthUrl } from '@/lib/auth';
 import SpotifyBtnLogin from '@/components/SpotifyBtnLogin';
 import { ThreeDMarquee } from "@/components/ui/3d-marquee";
-import CursorBlob  from "@/components/CursorBlob"
+import CursorBlob from "@/components/CursorBlob"
 import TextSpanWrapper from '@/components/TextSpanWrapper';
 import { AudioLines } from '@/components/animate-ui/icons/audio-lines';
 
 const images = [
-  "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
-  "https://assets.aceternity.com/animated-modal.png",
-  "https://assets.aceternity.com/animated-testimonials.webp",
-  "https://assets.aceternity.com/cloudinary_bkp/Tooltip_luwy44.png",
-  "https://assets.aceternity.com/github-globe.png",
-  "https://assets.aceternity.com/glare-card.png",
-  "https://assets.aceternity.com/layout-grid.png",
-  "https://assets.aceternity.com/flip-text.png",
-  "https://assets.aceternity.com/hero-highlight.png",
-  "https://assets.aceternity.com/carousel.webp",
-  "https://assets.aceternity.com/placeholders-and-vanish-input.png",
-  "https://assets.aceternity.com/shooting-stars-and-stars-background.png",
-  "https://assets.aceternity.com/signup-form.png",
-  "https://assets.aceternity.com/cloudinary_bkp/stars_sxle3d.png",
-  "https://assets.aceternity.com/spotlight-new.webp",
-  "https://assets.aceternity.com/cloudinary_bkp/Spotlight_ar5jpr.png",
-  "https://assets.aceternity.com/cloudinary_bkp/Parallax_Scroll_pzlatw_anfkh7.png",
-  "https://assets.aceternity.com/tabs.png",
-  "https://assets.aceternity.com/cloudinary_bkp/Tracing_Beam_npujte.png",
-  "https://assets.aceternity.com/cloudinary_bkp/typewriter-effect.png",
-  "https://assets.aceternity.com/glowing-effect.webp",
-  "https://assets.aceternity.com/hover-border-gradient.png",
-  "https://assets.aceternity.com/cloudinary_bkp/Infinite_Moving_Cards_evhzur.png",
-  "https://assets.aceternity.com/cloudinary_bkp/Lamp_hlq3ln.png",
-  "https://assets.aceternity.com/macbook-scroll.png",
-  "https://assets.aceternity.com/cloudinary_bkp/Meteors_fye3ys.png",
-  "https://assets.aceternity.com/cloudinary_bkp/Moving_Border_yn78lv.png",
-  "https://assets.aceternity.com/multi-step-loader.png",
-  "https://assets.aceternity.com/vortex.png",
-  "https://assets.aceternity.com/wobble-card.png",
-  "https://assets.aceternity.com/world-map.webp",
-];
+  '/img/spotify_cd_12.png',
+  '/img/spotify_boombox_13.png',
+  '/img/spotify_radio_14.png',
+  '/img/spotify_turntable_15.png',
+  '/img/spotify_waveform_16.png',
+  '/img/spotify_equalizer_17.png',
+  '/img/spotify_shuffle_19.png',
+  '/img/spotify_stage_21.png',
+  '/img/spotify_wave_1.png',
+  '/img/spotify_vinyl_2.png',
+  '/img/spotify_abstract_3.png',
+  '/img/spotify_concert_5.png',
+  '/img/spotify_guitar_6.png',
+  '/img/spotify_piano_7.png',
+  '/img/spotify_drums_8.png',
+  '/img/spotify_mic_9.png',
+  '/img/spotify_speaker_10.png',
+  '/img/spotify_cassette_11.png',
+  '/img/spotify_cd_12.png',
+  '/img/spotify_boombox_13.png',
+  '/img/spotify_radio_14.png',
+  '/img/spotify_wave_1.png',
+  '/img/spotify_vinyl_2.png',
+  '/img/spotify_abstract_3.png',
+  '/img/spotify_concert_5.png',
+  '/img/spotify_guitar_6.png',
+  '/img/spotify_piano_7.png',
+  '/img/spotify_drums_8.png',
+  '/img/spotify_mic_9.png',
+  '/img/spotify_speaker_10.png',
+  '/img/spotify_cassette_11.png',
+  '/img/spotify_turntable_15.png',
+  '/img/spotify_waveform_16.png',
+  '/img/spotify_equalizer_17.png',
+  '/img/spotify_shuffle_19.png',
+  '/img/spotify_stage_21.png',
+]
 
 export default function Home() {
   const router = useRouter();
@@ -78,7 +83,7 @@ export default function Home() {
             Inicia sesion con Spotify
           </SpotifyBtnLogin>
         </div>
-      </CursorBlob> 
+      </CursorBlob>
     </div>
   );
 }

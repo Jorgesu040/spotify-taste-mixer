@@ -21,8 +21,8 @@ export default function ArtistItem({
     const paddingClass = isSmall ? 'p-3' : 'p-4'
 
     return (
-        <div 
-            className={`flex flex-col items-center ${paddingClass} rounded-lg ${bg} hover:bg-spotify-gray-mid transition-colors cursor-pointer ${isSelected ? 'ring-2 ring-spotify-green' : ''}`} 
+        <div
+            className={`flex flex-col items-center ${paddingClass} rounded-lg ${bg} hover:bg-spotify-gray-mid transition-colors cursor-pointer group ${isSelected ? 'ring-2 ring-spotify-green' : ''}`}
             onClick={() => onSelect(artist)}
         >
             {/* Imagen con badge de rango opcional para TopWidget */}
@@ -39,7 +39,7 @@ export default function ArtistItem({
                             alt={artist.name}
                             width={imageSize}
                             height={imageSize}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                     </div>
                 ) : (

@@ -23,8 +23,8 @@ export default function TrackItem({
     const track = children
 
     return (
-        <div 
-            className={`flex items-center gap-3 p-2 rounded-lg ${bg} hover:bg-spotify-gray-light/20 transition-colors cursor-pointer ${isSelected ? 'ring-2 ring-spotify-green' : ''}`}
+        <div
+            className={`flex items-center gap-3 p-2 rounded-lg ${bg} hover:bg-spotify-gray-light/20 transition-colors cursor-pointer group ${isSelected ? 'ring-2 ring-spotify-green' : ''}`}
             onClick={() => onSelect(track)}
         >
             {rank && (
@@ -39,7 +39,7 @@ export default function TrackItem({
                         alt={track.name}
                         width={40}
                         height={40}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                 </div>
             ) : (

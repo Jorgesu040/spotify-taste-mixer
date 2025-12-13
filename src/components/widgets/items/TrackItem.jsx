@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { Music } from "lucide-react"
+import InfoButton from "@/components/InfoButton"
 
 // Formatear duración de ms a mm:ss
 function formatDuration(ms) {
@@ -11,9 +12,9 @@ function formatDuration(ms) {
 }
 
 
-export default function TrackItem({ 
-    children, 
-    onSelect, 
+export default function TrackItem({
+    children,
+    onSelect,
     isSelected,
     rank,
     showDuration = true,
@@ -62,6 +63,7 @@ export default function TrackItem({
                 {showExplicit && track.explicit && (
                     <span className="bg-spotify-gray-mid px-1 rounded text-[10px]">E</span>
                 )}
+                <InfoButton item={track} />
             </div>
         </div>
     )

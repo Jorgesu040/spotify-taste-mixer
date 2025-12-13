@@ -115,7 +115,7 @@ export async function fetchUserProfile(userId) {
 
 // Fetch user's top artists
 // timeRange: 'short_term' (4 weeks), 'medium_term' (6 months), 'long_term' (all time)
-export async function fetchUserTopArtists(timeRange = 'medium_term', limit = 20) {
+export async function fetchUserTopArtists(timeRange = 'medium_term', limit = 50) {
   const url = `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}&limit=${limit}`
   const response = await spotifyRequest(url)
   return response.items
@@ -124,7 +124,7 @@ export async function fetchUserTopArtists(timeRange = 'medium_term', limit = 20)
 
 // Fetch user's top tracks
 // timeRange: 'short_term' (4 weeks), 'medium_term' (6 months), 'long_term' (all time)
-export async function fetchUserTopTracks(timeRange = 'medium_term', limit = 20) {
+export async function fetchUserTopTracks(timeRange = 'medium_term', limit = 50) {
   const url = `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=${limit}`
   const response = await spotifyRequest(url)
   return response.items
@@ -138,6 +138,25 @@ export async function fetchTopTracksByGenre(genre, limit = 5) {
   const response = await spotifyRequest(url)
   console.log(`Top tracks for genre ${genre}:`, response)
   return response.tracks.items
+}
+
+
+// Fetch user's playlists
+export async function fetchUserPlaylists(limit = 50) {
+  const url = `https://api.spotify.com/v1/me/playlists?limit=${limit}`
+  const response = await spotifyRequest(url)
+  return response.items
+}
+
+
+// Fetch tracks from a specific playlist
+export async function fetchPlaylistTracks(playlistId) {
+  const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
+  const response = await spotifyRequest(url)
+
+  return response.items
+    .map(item => item.track)
+    .filter(track => track && track.id)
 }
 
 

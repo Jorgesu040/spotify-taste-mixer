@@ -1,18 +1,19 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { DndContext, closestCenter } from '@dnd-kit/core';
-import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { ChevronRight, GripVertical, Check, Plus, ArrowUp } from 'lucide-react';
+import { useState } from 'react'
+import { DndContext, closestCenter } from '@dnd-kit/core'
+import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { ChevronRight, GripVertical, Check, Plus, ArrowUp, ListMusic } from 'lucide-react'
+import PlaylistSelectorModal from '@/components/PlaylistSelectorModal'
 
 const SortableItem = ({ widget, onToggle }) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: widget.id });
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: widget.id })
 
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-    };
+    }
 
     return (
         <div ref={setNodeRef} style={style} className="flex items-center justify-between p-2 mb-2 bg-spotify-gray-dark rounded-md group">
@@ -29,23 +30,30 @@ const SortableItem = ({ widget, onToggle }) => {
                 {widget.visible && <Check size={12} className="text-black" />}
             </button>
         </div>
-    );
-};
+    )
+}
 
-export default function Sidebar({ widgets, onToggle, onReorder }) {
-    const [isOpen, setIsOpen] = useState(false);
+export default function Sidebar({ widgets, onToggle, onReorder, onImport }) {
+    const [isOpen, setIsOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleDragEnd = (event) => {
-        const { active, over } = event;
+        const { active, over } = event
         if (active.id !== over.id) {
-            const oldIndex = widgets.findIndex((w) => w.id === active.id);
-            const newIndex = widgets.findIndex((w) => w.id === over.id);
-            onReorder(arrayMove(widgets, oldIndex, newIndex));
+            const oldIndex = widgets.findIndex((w) => w.id === active.id)
+            const newIndex = widgets.findIndex((w) => w.id === over.id)
+            onReorder(arrayMove(widgets, oldIndex, newIndex))
         }
-    };
+    }
 
     return (
         <>
+            <PlaylistSelectorModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSelect={onImport}
+            />
+
             {/* Botón de apertura/cierre */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -66,11 +74,22 @@ export default function Sidebar({ widgets, onToggle, onReorder }) {
 
                     {/* Navegación */}
                     <div className="mb-6 space-y-2">
+                        {/* Ir al inicio */}
                         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full text-left p-2 hover:bg-spotify-gray-dark rounded flex items-center gap-2 text-gray-300 hover:text-white transition-colors">
                             <ArrowUp size={16} /> Ir al inicio
                         </button>
-                        {/* Placeholder de Import Playlist */}
-                        <button className="w-full text-left p-2 hover:bg-spotify-gray-dark rounded flex items-center gap-2 text-gray-300 hover:text-white transition-colors">
+                        {/* Ir a Playlist */}
+                        <button
+                            onClick={() => document.getElementById('playlist-section')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="w-full text-left p-2 hover:bg-spotify-gray-dark rounded flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                        >
+                            <ListMusic size={16} /> Ir a Playlist
+                        </button>
+                        {/* Importar Playlist */}
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-full text-left p-2 hover:bg-spotify-gray-dark rounded flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                        >
                             <Plus size={16} /> Cargar Playlist
                         </button>
                     </div>
@@ -93,5 +112,5 @@ export default function Sidebar({ widgets, onToggle, onReorder }) {
                 </div>
             </aside>
         </>
-    );
+    )
 }

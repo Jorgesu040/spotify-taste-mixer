@@ -100,6 +100,17 @@ export function usePlaylistContext() {
       return [...prevTracks, { ...track, source: { type: 'favorite', name: 'Favoritos' } }]
     })
   }
+  // Add tracks from playlist import
+  const addTracksToPlaylist = (newTracks) => {
+    setSelectedTracks(prevTracks => {
+      const existingIds = new Set(prevTracks.map(t => t.id))
+      const uniqueNew = newTracks.filter(t => !existingIds.has(t.id)).map(t => ({
+        ...t,
+        source: { type: 'import', name: 'Playlist Importada' }
+      }))
+      return [...prevTracks, ...uniqueNew]
+    })
+  }
 
   return {
     // States
@@ -112,5 +123,6 @@ export function usePlaylistContext() {
     handleTrackSelect,
     removeTrack,
     addFavoriteToPlaylist,
+    addTracksToPlaylist,
   }
 }

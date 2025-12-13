@@ -42,6 +42,7 @@ export default function Dashboard() {
         handleTrackSelect,
         removeTrack,
         addFavoriteToPlaylist,
+        addTracksToPlaylist
     } = usePlaylistContext()
 
     const { widgets, toggleWidget, reorderWidgets, isLoaded } = useWidgetManager()
@@ -112,7 +113,12 @@ export default function Dashboard() {
         <main className="min-h-screen bg-spotify-gray-darker p-2 sm:p-4 md:p-6 lg:p-8">
 
             {/* Sidebar & Widget Management */}
-            <Sidebar widgets={widgets} onToggle={toggleWidget} onReorder={reorderWidgets} />
+            <Sidebar
+                widgets={widgets}
+                onToggle={toggleWidget}
+                onReorder={reorderWidgets}
+                onImport={addTracksToPlaylist}
+            />
 
             {/* Widgets grid - Dynamic */}
             {!isLoaded ? null : (
@@ -154,40 +160,43 @@ export default function Dashboard() {
                 </CursorBlob>
             )}
 
-            {/* Create Playlist Button */}
-            <SpotifyBtn
-                onClick={handleCreatePlaylist}
-                disabled={!canCreatePlaylist || isCreatingPlaylist}
-                className="w-full my-4 bg-spotify-green text-white hover:bg-spotify-green-light flex items-center justify-center"
-            >
-                {isCreatingPlaylist ? (
-                    <>
-                        <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                        Creando playlist...
-                    </>
-                ) : (
-                    <>
-                        <ListMusic className="w-5 h-5 mr-2" />
-                        Crear Playlist en Spotify ({tracksInRange.length} canciones)
-                        <ExternalLink className="w-4 h-4 ml-2" />
-                    </>
-                )}
-            </SpotifyBtn>
+            {/* Playlist Section Anchor */}
+            <div id="playlist-section" className="scroll-mt-6">
+                {/* Create Playlist Button */}
+                <SpotifyBtn
+                    onClick={handleCreatePlaylist}
+                    disabled={!canCreatePlaylist || isCreatingPlaylist}
+                    className="w-full my-4 bg-spotify-green text-white hover:bg-spotify-green-light flex items-center justify-center"
+                >
+                    {isCreatingPlaylist ? (
+                        <>
+                            <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                            Creando playlist...
+                        </>
+                    ) : (
+                        <>
+                            <ListMusic className="w-5 h-5 mr-2" />
+                            Crear Playlist en Spotify ({tracksInRange.length} canciones)
+                            <ExternalLink className="w-4 h-4 ml-2" />
+                        </>
+                    )}
+                </SpotifyBtn>
 
-            {/* Playlist and Favorites side by side */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-                <PlaylistPanel
-                    tracks={selectedTracks}
-                    onRemoveTrack={removeTrack}
-                    popularityRange={popularityRange}
-                    favorites={favorites}
-                    onToggleFavorite={toggleFavorite}
-                />
-                <FavoritesPanel
-                    favorites={favorites}
-                    onAddToPlaylist={addFavoriteToPlaylist}
-                    onRemoveFavorite={removeFavorite}
-                />
+                {/* Playlist and Favorites side by side */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+                    <PlaylistPanel
+                        tracks={selectedTracks}
+                        onRemoveTrack={removeTrack}
+                        popularityRange={popularityRange}
+                        favorites={favorites}
+                        onToggleFavorite={toggleFavorite}
+                    />
+                    <FavoritesPanel
+                        favorites={favorites}
+                        onAddToPlaylist={addFavoriteToPlaylist}
+                        onRemoveFavorite={removeFavorite}
+                    />
+                </div>
             </div>
 
             <WidgetLimitPopup message={limitError} onClose={() => setLimitError(null)} duration={4000} />

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { motion } from 'motion/react'
 
 export default function WidgetWrapper({ children, cols = 1, storageKey }) {
   const [currentCols, setCurrentCols] = useState(cols)
@@ -28,7 +29,11 @@ export default function WidgetWrapper({ children, cols = 1, storageKey }) {
   }[currentCols]
 
   return (
-    <div className={`relative z-1 w-full h-full min-w-0 ${colsClass}`}>
+    <motion.div
+      layout
+      transition={{ type: "spring", duration: 0.4, bounce: 0.2 }}
+      className={`relative z-1 w-full h-full min-w-0 ${colsClass}`}
+    >
       {/* Column size selector */}
       {storageKey && (
         <div className="absolute bottom-2 right-2 hidden md:flex gap-1 bg-spotify-gray-darker/80 rounded-full p-2 z-20">
@@ -37,8 +42,8 @@ export default function WidgetWrapper({ children, cols = 1, storageKey }) {
               key={num}
               onClick={() => handleChangeCol(num)}
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all ${currentCols === num
-                  ? 'bg-spotify-green text-black'
-                  : 'bg-spotify-gray-mid text-spotify-gray-light hover:bg-spotify-gray-light/20'
+                ? 'bg-spotify-green text-black'
+                : 'bg-spotify-gray-mid text-spotify-gray-light hover:bg-spotify-gray-light/20'
                 }`}
             >
               {num}
@@ -49,6 +54,6 @@ export default function WidgetWrapper({ children, cols = 1, storageKey }) {
       <div className="h-full min-w-0">
         {children}
       </div>
-    </div>
+    </motion.div>
   )
 }

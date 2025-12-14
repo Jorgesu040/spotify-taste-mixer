@@ -19,6 +19,7 @@ import { useFilter } from "@/hooks/useFilter"
 import { createPlaylistWithTracks } from "@/lib/spotifyFetch"
 import Sidebar from "@/components/Sidebar"
 import { useWidgetManager } from "@/hooks/useWidgetManager"
+import { LayoutGroup } from "motion/react"
 
 // Load favorites from localStorage
 function loadFavorites() {
@@ -122,42 +123,44 @@ export default function Dashboard() {
 
             {/* Widgets grid - Dynamic */}
             {!isLoaded ? null : (
-                <CursorBlob className="p-4 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch bg-accent/50 transition-all duration-300">
-                    {widgets.map((widget) => {
-                        if (!widget.visible) return null;
+                <LayoutGroup>
+                    <CursorBlob className="p-4 shadow-[inset_-5px_-10px_30px_-10px_rgba(128,128,128,0.5)] backdrop-blur-md rounded-lg grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch bg-accent/50 transition-all duration-300">
+                        {widgets.map((widget) => {
+                            if (!widget.visible) return null;
 
-                        return (
-                            <WidgetWrapper key={widget.id} cols={widget.cols} storageKey={`widget-${widget.id}-cols`}>
-                                {(() => {
-                                    switch (widget.id) {
-                                        case 'artist':
-                                            return <ArtistWidget onSelect={handleArtistSelect} selectedItems={selectedArtists} onLimitError={setLimitError} />;
-                                        case 'track':
-                                            return <TrackWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} onLimitError={setLimitError} />;
-                                        case 'genre':
-                                            return <GenreWidget onSelect={handleGenreSelect} selectedItems={selectedGenres} onLimitError={setLimitError} />;
-                                        case 'top':
-                                            return (
-                                                <TopWidget
-                                                    onSelectArtist={handleArtistSelect}
-                                                    onSelectTrack={handleTrackSelect}
-                                                    selectedArtists={selectedArtists}
-                                                    selectedTracks={selectedTracks}
-                                                    onLimitError={setLimitError}
-                                                />
-                                            );
-                                        case 'decade':
-                                            return <DecadeWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} />;
-                                        case 'popularity':
-                                            return <PopularityWidget onSelect={setPopularityRange} selectedRange={popularityRange} />;
-                                        default:
-                                            return null;
-                                    }
-                                })()}
-                            </WidgetWrapper>
-                        );
-                    })}
-                </CursorBlob>
+                            return (
+                                <WidgetWrapper key={widget.id} cols={widget.cols} storageKey={`widget-${widget.id}-cols`}>
+                                    {(() => {
+                                        switch (widget.id) {
+                                            case 'artist':
+                                                return <ArtistWidget onSelect={handleArtistSelect} selectedItems={selectedArtists} onLimitError={setLimitError} />;
+                                            case 'track':
+                                                return <TrackWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} onLimitError={setLimitError} />;
+                                            case 'genre':
+                                                return <GenreWidget onSelect={handleGenreSelect} selectedItems={selectedGenres} onLimitError={setLimitError} />;
+                                            case 'top':
+                                                return (
+                                                    <TopWidget
+                                                        onSelectArtist={handleArtistSelect}
+                                                        onSelectTrack={handleTrackSelect}
+                                                        selectedArtists={selectedArtists}
+                                                        selectedTracks={selectedTracks}
+                                                        onLimitError={setLimitError}
+                                                    />
+                                                );
+                                            case 'decade':
+                                                return <DecadeWidget onSelect={handleTrackSelect} selectedItems={selectedTracks} />;
+                                            case 'popularity':
+                                                return <PopularityWidget onSelect={setPopularityRange} selectedRange={popularityRange} />;
+                                            default:
+                                                return null;
+                                        }
+                                    })()}
+                                </WidgetWrapper>
+                            );
+                        })}
+                    </CursorBlob>
+                </LayoutGroup>
             )}
 
             {/* Playlist Section Anchor */}

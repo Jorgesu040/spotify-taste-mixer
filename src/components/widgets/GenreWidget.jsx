@@ -8,6 +8,8 @@ import GenreItem from './items/GenreItem'
 import TextSpanWrapper from '@/components/TextSpanWrapper'
 import { Search, Palette } from 'lucide-react'
 
+import { motion } from "motion/react"
+
 export default function GenreWidget({ onSelect, selectedItems, className, maxItems = 5, onLimitError }) {
     const [response, setResponse] = useState([])
 
@@ -53,6 +55,16 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
         }
     }
 
+    const containerVariants = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.03
+            }
+        }
+    }
+
     return (
         <section className={`w-full h-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             <div className="flex justify-between items-center mb-4">
@@ -73,13 +85,18 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
                         <p>Escribe para buscar</p>
                     </div>
                 ) : (
-                    <div className="flex flex-wrap content-start gap-2 mt-4 max-h-[350px] overflow-y-auto p-2">
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="flex flex-wrap content-start gap-2 mt-4 max-h-[350px] overflow-y-auto p-2"
+                    >
                         {response.map((genre, idx) => (
                             <GenreItem key={`${genre}-${idx}`} onSelect={() => handleSelect(genre)} isSelected={isSelected(genre)}>
                                 {genre}
                             </GenreItem>
                         ))}
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </section>

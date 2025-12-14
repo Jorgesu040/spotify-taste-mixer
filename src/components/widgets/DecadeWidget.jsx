@@ -7,7 +7,10 @@ import TrackItem from "./items/TrackItem"
 import { fetchSearchTracksByYear } from "@/lib/spotifyFetch"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 
+import { motion } from "motion/react"
+
 export default function DecadeWidget({ onSelect, selectedItems = [], className }) {
+    // ...
     const [startDecade, setStartDecade] = useState("")
     const [endDecade, setEndDecade] = useState("")
     const [results, setResults] = useState([])
@@ -58,6 +61,16 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
 
     const isSelected = (trackId) => Array.isArray(selectedItems) && selectedItems.some(t => t.id === trackId)
 
+    const containerVariants = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.05
+            }
+        }
+    }
+
     return (
         <section className={`w-full h-full min-h-[500px] flex flex-col bg-spotify-gray-dark rounded-lg p-4 ${className ?? ''}`}>
             <div className="flex justify-between items-center mb-4">
@@ -96,8 +109,14 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
             {/* Results or empty state */}
             <div className="flex-1 flex flex-col mt-4">
                 {results.length > 0 ? (
-                    <div className="space-y-2 max-h-[250px] overflow-y-auto p-2">
-                        {results.map(track => (
+                    <motion.div
+                        key={startDecade + endDecade} // Force re-render on new search
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="space-y-2 max-h-[250px] overflow-y-auto p-2"
+                    >
+                        {results.map((track) => (
                             <TrackItem
                                 key={track.id}
                                 onSelect={handleSelectTrack}
@@ -107,7 +126,7 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
                                 {track}
                             </TrackItem>
                         ))}
-                    </div>
+                    </motion.div>
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center text-spotify-gray-light">
                         <Search size={48} className="opacity-50 mb-2" />

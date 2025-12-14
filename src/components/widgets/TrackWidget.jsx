@@ -7,6 +7,8 @@ import TrackItem from "@/components/widgets/items/TrackItem"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { Search, Music } from "lucide-react"
 
+import { motion } from "motion/react"
+
 export default function TrackWidget({ onSelect, selectedItems = [], className, maxItems = 20, onLimitError }) {
 
     const [response, setResponse] = useState([])
@@ -15,7 +17,7 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
     const canAddMore = items.length < maxItems
 
     const handleSelect = (track) => {
-
+        // ...
         // Case 1: deselecting
         if (isSelected(track.id)) {
             const newSelected = items.filter(item => item.id !== track.id)
@@ -28,6 +30,16 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
         } else {
             // show popup notification for limit
             if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxItems} pistas.`)
+        }
+    }
+
+    const containerVariants = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.05
+            }
         }
     }
 
@@ -51,11 +63,16 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
                         <p>Escribe para buscar</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 gap-2 mt-4 max-h-[350px] overflow-y-auto p-2">
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="grid grid-cols-1 gap-2 mt-4 max-h-[350px] overflow-y-auto p-2"
+                    >
                         {response.map((item) => (
                             <TrackItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</TrackItem>
                         ))}
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </section>

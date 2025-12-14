@@ -7,6 +7,8 @@ import ArtistItem from "@/components/widgets/items/ArtistItem"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { Search, User } from "lucide-react"
 
+import { motion } from "motion/react"
+
 export default function ArtistWidget({ onSelect, selectedItems = [], className, maxItems = 5, onLimitError }) {
 
     const [response, setResponse] = useState([])
@@ -15,7 +17,7 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
     const canAddMore = items.length < maxItems
 
     const handleSelect = (artist) => {
-
+        // ... (rest is same)
         // Case 1: deselecting
         if (isSelected(artist.id)) {
             const newSelected = items.filter(item => item.id !== artist.id)
@@ -28,6 +30,16 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
         } else {
             // show popup notification for limit
             if (onLimitError) onLimitError(`Puedes seleccionar hasta ${maxItems} artistas.`)
+        }
+    }
+
+    const containerVariants = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.05
+            }
         }
     }
 
@@ -51,11 +63,16 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
                         <p>Escribe para buscar</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4 max-h-[350px] overflow-y-auto p-2">
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4 max-h-[350px] overflow-y-auto p-2"
+                    >
                         {response.map((item) => (
                             <ArtistItem key={item.id} onSelect={handleSelect} isSelected={isSelected(item.id)}>{item}</ArtistItem>
                         ))}
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </section>

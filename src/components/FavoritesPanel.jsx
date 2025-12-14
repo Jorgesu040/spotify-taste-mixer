@@ -37,6 +37,7 @@ export default function FavoritesPanel({ favorites = [], onAddToPlaylist, onRemo
                                 bg="bg-spotify-gray-mid"
                                 onSelect={() => handleAddToPlaylist(track)}
                                 isSelected={false}
+                                showInfo={false}
                             >
                                 {track}
                             </TrackItem>

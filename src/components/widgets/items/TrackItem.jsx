@@ -20,6 +20,7 @@ export default function TrackItem({
     rank,
     showDuration = true,
     showExplicit = true,
+    showInfo = true,
     bg = 'bg-spotify-gray-dark'
 }) {
     const track = children
@@ -75,7 +76,7 @@ export default function TrackItem({
                 {showExplicit && track.explicit && (
                     <span className="bg-spotify-gray-mid px-1 rounded text-[10px]">E</span>
                 )}
-                <InfoButton item={track} />
+                {showInfo && <InfoButton item={track} />}
             </div>
         </motion.div>
     )

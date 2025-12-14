@@ -54,92 +54,92 @@ export default function InfoModal({ item, isOpen, onClose }) {
         <Dialog open={isOpen} onClose={onClose} className="relative z-50">
             {/* Backdrop */}
             <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.1, duration: 0.3 }}
-                        className="fixed inset-0 bg-black/80 backdrop-blur-sm" aria-hidden="true" />
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className="fixed inset-0 bg-black/80 backdrop-blur-sm" aria-hidden="true" />
 
             {/* Modal */}
             <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1, duration: 0.3 }}
-                        className="fixed inset-0 flex items-end md:items-center justify-center md:p-4"
-                    >
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className="fixed inset-0 flex items-end md:items-center justify-center md:p-4"
+            >
                 <DialogPanel className="w-full max-h-[90vh] overflow-y-auto bg-spotify-gray-dark border-t md:border border-white/10 p-6 shadow-2xl rounded-t-2xl md:rounded-2xl md:max-w-4xl relative">
-                    
-                        {/* Close Button */}
-                        <button
-                            onClick={onClose}
-                            className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 rounded-full text-gray-400 hover:text-white transition-colors z-10"
-                        >
-                            <X size={20} />
-                        </button>
 
-                        <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
-                            {/* Column 1: Image */}
-                            <div className="w-full md:w-80 shrink-0">
-                                <div className="aspect-square w-full rounded-xl overflow-hidden shadow-2xl bg-spotify-gray-mid">
-                                    {image ? (
-                                        <Image src={image} alt={item.name} layout="fill" objectFit="cover" />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <Music2 size={64} className="text-gray-500" />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                    {/* Close Button */}
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 rounded-full text-gray-400 hover:text-white transition-colors z-10"
+                    >
+                        <X size={20} />
+                    </button>
 
-                            {/* Column 2: Info */}
-                            <div className="flex-1 min-w-0">
-                                {/* Header */}
-                                <div className="mb-6">
-                                    <div className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">
-                                        <TextSpanWrapper makeSmall={true}>{item.name}</TextSpanWrapper>
-                                    </div>
-                                    <p className="text-spotify-green font-medium flex items-center gap-2 text-lg">
-                                        {isTrack ? <Disc size={20} /> : <User size={20} />}
-                                        {isTrack ? 'Canción' : 'Artista'}
-                                    </p>
-                                </div>
-
-                                {/* Details Grid */}
-                                <div className="space-y-3 mb-8">
-                                    {isTrack && (
-                                        <>
-                                            <InfoRow icon={Mic2} label="Artista(s)" value={artists} />
-                                            <InfoRow icon={Disc} label="Álbum" value={albumName} />
-                                            <InfoRow icon={Calendar} label="Lanzamiento" value={releaseDate} />
-                                            <InfoRow icon={Clock} label="Duración" value={duration} />
-                                            <InfoRow icon={Clock} label="Pista" value={trackNumber} />
-                                            {item.explicit && <InfoRow icon={AlertCircle} label="Contenido" value="Explícito" />}
-                                        </>
-                                    )}
-
-                                    {!isTrack && (
-                                        <>
-                                            <InfoRow icon={Music2} label="Géneros" value={genres} />
-                                            <InfoRow icon={User} label="Seguidores" value={followers} />
-                                        </>
-                                    )}
-
-                                    <InfoRow icon={Star} label="Popularidad" value={`${popularity}%`} />
-                                </div>
-
-                                {/* Abrir en spotify */}
-                                {spotifyUrl && (
-                                    <div className="pt-4 border-t border-white/10">
-                                        <SpotifyBtn
-                                            onClick={() => window.open(spotifyUrl, '_blank')}
-                                            className="w-full md:w-auto bg-spotify-green hover:bg-spotify-green-light text-black font-bold flex items-center justify-center gap-2 hover:scale-105 px-8"
-                                        >
-                                            <Globe size={18} />
-                                            Abrir en Spotify
-                                        </SpotifyBtn>
+                    <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
+                        {/* Column 1: Image */}
+                        <div className="w-full md:w-80 shrink-0">
+                            <div className="aspect-square w-full rounded-xl overflow-hidden shadow-2xl bg-spotify-gray-mid relative">
+                                {image ? (
+                                    <Image src={image} alt={item.name} layout="fill" objectFit="cover" className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center">
+                                        <Music2 size={64} className="text-gray-500" />
                                     </div>
                                 )}
                             </div>
                         </div>
+
+                        {/* Column 2: Info */}
+                        <div className="flex-1 min-w-0">
+                            {/* Header */}
+                            <div className="mb-6">
+                                <div className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">
+                                    <TextSpanWrapper makeSmall={true}>{item.name}</TextSpanWrapper>
+                                </div>
+                                <p className="text-spotify-green font-medium flex items-center gap-2 text-lg">
+                                    {isTrack ? <Disc size={20} /> : <User size={20} />}
+                                    {isTrack ? 'Canción' : 'Artista'}
+                                </p>
+                            </div>
+
+                            {/* Details Grid */}
+                            <div className="space-y-3 mb-8">
+                                {isTrack && (
+                                    <>
+                                        <InfoRow icon={Mic2} label="Artista(s)" value={artists} />
+                                        <InfoRow icon={Disc} label="Álbum" value={albumName} />
+                                        <InfoRow icon={Calendar} label="Lanzamiento" value={releaseDate} />
+                                        <InfoRow icon={Clock} label="Duración" value={duration} />
+                                        <InfoRow icon={Clock} label="Pista" value={trackNumber} />
+                                        {item.explicit && <InfoRow icon={AlertCircle} label="Contenido" value="Explícito" />}
+                                    </>
+                                )}
+
+                                {!isTrack && (
+                                    <>
+                                        <InfoRow icon={Music2} label="Géneros" value={genres} />
+                                        <InfoRow icon={User} label="Seguidores" value={followers} />
+                                    </>
+                                )}
+
+                                <InfoRow icon={Star} label="Popularidad" value={`${popularity}%`} />
+                            </div>
+
+                            {/* Abrir en spotify */}
+                            {spotifyUrl && (
+                                <div className="pt-4 border-t border-white/10">
+                                    <SpotifyBtn
+                                        onClick={() => window.open(spotifyUrl, '_blank')}
+                                        className="w-full md:w-auto bg-spotify-green hover:bg-spotify-green-light text-black font-bold flex items-center justify-center gap-2 hover:scale-105 px-8"
+                                    >
+                                        <Globe size={18} />
+                                        Abrir en Spotify
+                                    </SpotifyBtn>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </DialogPanel>
             </motion.div>
         </Dialog>

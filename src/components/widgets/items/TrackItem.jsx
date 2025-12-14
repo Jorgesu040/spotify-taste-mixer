@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Music } from "lucide-react"
 import InfoButton from "@/components/InfoButton"
+import { motion } from "motion/react"
 
 // Formatear duración de ms a mm:ss
 function formatDuration(ms) {
@@ -23,8 +24,19 @@ export default function TrackItem({
 }) {
     const track = children
 
+    const itemVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", duration: 0.2, bounce: 0.2 }
+        }
+    }
+
     return (
-        <div
+        <motion.div
+            layout
+            variants={itemVariants}
             className={`flex items-center gap-3 p-2 rounded-lg ${bg} hover:bg-spotify-gray-light/20 transition-colors cursor-pointer group ${isSelected ? 'ring-2 ring-spotify-green' : ''}`}
             onClick={() => onSelect(track)}
         >
@@ -65,6 +77,6 @@ export default function TrackItem({
                 )}
                 <InfoButton item={track} />
             </div>
-        </div>
+        </motion.div>
     )
 }

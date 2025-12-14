@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { User } from "lucide-react"
 import InfoButton from "@/components/InfoButton"
+import { motion } from "motion/react"
 
 export default function ArtistItem({
     children,
@@ -21,8 +22,19 @@ export default function ArtistItem({
     const imageSizeClass = isSmall ? 'w-16 h-16' : 'w-[150px] h-[150px]'
     const paddingClass = isSmall ? 'p-3' : 'p-4'
 
+    const itemVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: { type: "spring", bounce: 0.2, duration: 0.2 }
+        }
+    }
+
     return (
-        <div
+        <motion.div
+            layout
+            variants={itemVariants}
             className={`flex flex-col items-center ${paddingClass} rounded-lg ${bg} hover:bg-spotify-gray-mid transition-colors cursor-pointer group ${isSelected ? 'ring-2 ring-spotify-green' : ''}`}
             onClick={() => onSelect(artist)}
         >
@@ -48,8 +60,8 @@ export default function ArtistItem({
                         <User size={isSmall ? 24 : 48} className="text-spotify-gray-light" />
                     </div>
                 )}
-                <div className="absolute bottom-0 right-0 z-20">
-                    <InfoButton makeSmall={isSmall} item={artist} className="text-white bg-black/60 hover:bg-black/80 shadow-lg " />
+                <div className={`absolute bottom-0 right-0 z-20 ${isSmall ? 'p-2' : 'p-4'}`}>
+                    <InfoButton makeSmall={isSmall} item={artist} className="text-white bg-black/60 hover:bg-black/80 shadow-lg" />
                 </div>
             </div>
 
@@ -68,6 +80,6 @@ export default function ArtistItem({
                     {artist.genres.slice(0, 2).join(', ')}
                 </p>
             )}
-        </div>
+        </motion.div>
     )
 }

@@ -1,6 +1,8 @@
 'use client'
 
+import Image from 'next/image'
 import { Music2, Loader2 } from 'lucide-react'
+import { motion } from 'motion/react'
 
 export default function PlaylistItem({
     children,
@@ -11,18 +13,23 @@ export default function PlaylistItem({
     const playlist = children
 
     return (
-        <button
+        <motion.button
+            layout
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             onClick={() => onSelect(playlist)}
             disabled={isImporting}
             className={`flex items-center gap-3 p-2 rounded-lg ${bg} hover:bg-spotify-gray-light/20 transition-all cursor-pointer w-full text-left group border border-transparent hover:border-white/10`}
         >
             {/* Imagen */}
-            <div className="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-spotify-gray-mid shadow-lg">
+            <div className="relative w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-spotify-gray-mid shadow-lg">
                 {playlist.images?.[0]?.url ? (
-                    <img
+                    <Image
                         src={playlist.images[0].url}
                         alt={playlist.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        unoptimized
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-500">
@@ -45,6 +52,6 @@ export default function PlaylistItem({
             {isImporting && (
                 <Loader2 className="w-5 h-5 animate-spin text-spotify-green" />
             )}
-        </button>
+        </motion.button>
     )
 }

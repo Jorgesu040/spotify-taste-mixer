@@ -5,6 +5,7 @@ export function usePlaylistContext() {
   const [selectedTracks, setSelectedTracks] = useState([])
   const [selectedArtists, setSelectedArtists] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([])
+  const [isLoadingTracks, setIsLoadingTracks] = useState(false)
 
   // Track previous artists/genres to detect additions/removals
   const prevArtistsRef = useRef([])
@@ -12,16 +13,17 @@ export function usePlaylistContext() {
 
   // Handle artist selection - fetch top tracks for new artists
   const handleArtistSelect = async (newArtists) => {
+    setIsLoadingTracks(true)
     const previousArtists = prevArtistsRef.current
     const addedArtists = newArtists.filter(artist => !previousArtists.find(prevArtist => prevArtist.id === artist.id))
     const removedArtistIds = previousArtists.filter(prevArtist => !newArtists.find(artist => artist.id === prevArtist.id)).map(removed => removed.id)
-    
+
     prevArtistsRef.current = newArtists
     setSelectedArtists(newArtists)
 
     // Remove tracks from removed artists
     if (removedArtistIds.length > 0) {
-      setSelectedTracks(prevTracks => prevTracks.filter(track => 
+      setSelectedTracks(prevTracks => prevTracks.filter(track =>
         !track.source || track.source.type !== 'artist' || !removedArtistIds.includes(track.source.id)
       ))
     }
@@ -43,20 +45,22 @@ export function usePlaylistContext() {
         console.error(`Error fetching top tracks for ${artist.name}:`, error)
       }
     }
+    setIsLoadingTracks(false)
   }
 
   // Handle genre selection - fetch top tracks for new genres
   const handleGenreSelect = async (newGenres) => {
+    setIsLoadingTracks(true)
     const previousGenres = prevGenresRef.current
     const addedGenres = newGenres.filter(genre => !previousGenres.includes(genre))
     const removedGenres = previousGenres.filter(prevGenre => !newGenres.includes(prevGenre))
-    
+
     prevGenresRef.current = newGenres
     setSelectedGenres(newGenres)
 
     // Remove tracks from removed genres
     if (removedGenres.length > 0) {
-      setSelectedTracks(prevTracks => prevTracks.filter(track => 
+      setSelectedTracks(prevTracks => prevTracks.filter(track =>
         !track.source || track.source.type !== 'genre' || !removedGenres.includes(track.source.name)
       ))
     }
@@ -78,11 +82,12 @@ export function usePlaylistContext() {
         console.error(`Error fetching top tracks for genre ${genre}:`, error)
       }
     }
+    setIsLoadingTracks(false)
   }
 
   // Handle direct track selection (from TrackWidget/search)
   const handleTrackSelect = (newTracks) => {
-    const tracksWithSource = newTracks.map(candidate => 
+    const tracksWithSource = newTracks.map(candidate =>
       candidate.source ? candidate : { ...candidate, source: { type: 'search', name: 'Búsqueda' } }
     )
     setSelectedTracks(tracksWithSource)
@@ -117,6 +122,7 @@ export function usePlaylistContext() {
     selectedTracks,
     selectedArtists,
     selectedGenres,
+    isLoadingTracks,
     // Handlers
     handleArtistSelect,
     handleGenreSelect,

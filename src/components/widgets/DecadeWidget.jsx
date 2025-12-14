@@ -6,6 +6,7 @@ import DecadeItem from "./items/DecadeItem"
 import TrackItem from "./items/TrackItem"
 import { fetchSearchTracksByYear } from "@/lib/spotifyFetch"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
+import LoadingSpinner from "@/components/ui/loading-spinner"
 
 import { motion } from "motion/react"
 
@@ -13,6 +14,7 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
     const [startDecade, setStartDecade] = useState("")
     const [endDecade, setEndDecade] = useState("")
     const [results, setResults] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     // Generate decades from 1900 to current decade
     const decades = useMemo(() => {
@@ -35,6 +37,7 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
         if (!startDecade) return
 
         const search = async () => {
+            setIsLoading(true)
             try {
                 const startYear = parseInt(startDecade)
                 const endYear = endDecade ? parseInt(endDecade) + 9 : startYear + 9
@@ -43,6 +46,8 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
             } catch (error) {
                 console.error('Error fetching tracks by year:', error)
                 setResults([])
+            } finally {
+                setIsLoading(false)
             }
         }
 
@@ -107,7 +112,9 @@ export default function DecadeWidget({ onSelect, selectedItems = [], className }
 
             {/* Results or empty state */}
             <div className="flex-1 flex flex-col mt-4">
-                {results.length > 0 ? (
+                {isLoading ? (
+                    <LoadingSpinner className="flex-1" />
+                ) : results.length > 0 ? (
                     <motion.div
                         key={startDecade + endDecade} // Force re-render on new search
                         variants={containerVariants}

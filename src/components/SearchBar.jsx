@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 
 
-function SearchBar({ fnToCall, persistKey, setResponse, children = "Escribe para empezar a buscar", debounceMs = 300 }) {
+function SearchBar({ fnToCall, persistKey, setResponse, setIsLoading, children = "Escribe para empezar a buscar", debounceMs = 300 }) {
 
     // estado local para el input (respuesta inmediata en UI)
     const [value, setValue] = useState(() => {
@@ -23,12 +23,28 @@ function SearchBar({ fnToCall, persistKey, setResponse, children = "Escribe para
 
     // debounce: llama fnToCall y guarda en localStorage tras debounceMs
     useEffect(() => {
+        // Si no hay valor, limpiamos respuesta y aseguramos loading false
+        if (!value) {
+            setResponse([])
+            if (setIsLoading) setIsLoading(false)
+            return
+        }
+
+        let isActive = true
+
         const id = setTimeout(async () => {
-            if (value) {
+            if (setIsLoading) setIsLoading(true)
+
+            try {
                 const result = await fnToCall(value)
-                setResponse(result)
-            } else {
-                setResponse([])
+                if (isActive) {
+                    setResponse(result)
+                }
+            } catch (error) {
+                console.error("Error searching:", error)
+                if (isActive) setResponse([])
+            } finally {
+                if (isActive && setIsLoading) setIsLoading(false)
             }
 
             if (persistKey) {
@@ -40,8 +56,11 @@ function SearchBar({ fnToCall, persistKey, setResponse, children = "Escribe para
             }
         }, debounceMs)
 
-        return () => clearTimeout(id)
-    }, [value, debounceMs, fnToCall, persistKey, setResponse])
+        return () => {
+            isActive = false
+            clearTimeout(id)
+        }
+    }, [value, debounceMs, fnToCall, persistKey, setResponse, setIsLoading])
 
 
     const handleChange = (event) => {

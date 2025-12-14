@@ -6,6 +6,7 @@ import { fetchUserTopArtists, fetchUserTopTracks } from "@/lib/spotifyFetch"
 import SpotifyBtn from "../SpotifyBtn"
 import ArtistItem from "./items/ArtistItem"
 import TrackItem from "./items/TrackItem"
+import LoadingSpinner from "@/components/ui/loading-spinner"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 
 export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTracks = [], selectedArtists = [], className, maxArtists = 5, maxTracks = 20, onLimitError }) {
@@ -13,6 +14,7 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
     const [timeRange, setTimeRange] = useState('medium_term') // short_term | medium_term | long_term
     const [topArtists, setTopArtists] = useState([])
     const [topTracks, setTopTracks] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const timeRangeLabels = [
@@ -65,6 +67,7 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
 
         const fetchData = async () => {
             setError(null)
+            setIsLoading(true)
             try {
                 if (activeTab === 'artists') {
                     const artists = await fetchUserTopArtists(timeRange, 20)
@@ -77,6 +80,7 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
                 setError(err.message)
                 console.error('Error fetching top items:', err)
             } finally {
+                setIsLoading(false)
             }
         }
 
@@ -137,43 +141,50 @@ export default function TopWidget({ onSelectArtist, onSelectTrack, selectedTrack
 
             {/* Content wrapper */}
             <div className="flex-1 flex flex-col">
-                {/* Artists List */}
-                {activeTab === 'artists' && (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[340px] overflow-y-auto p-2">
-                        {topArtists.map((artist, index) => (
-                            <ArtistItem
-                                key={artist.id}
-                                onSelect={handleSelectArtist}
-                                isSelected={isArtistSelected(artist.id)}
-                                rank={index + 1}
-                                showFollowers={false}
-                                showGenres={false}
-                                size="small"
-                                bg="bg-spotify-gray-mid"
-                            >
-                                {artist}
-                            </ArtistItem>
-                        ))}
-                    </div>
-                )}
+                {isLoading ? (
+                    <LoadingSpinner className="flex-1" />
+                ) : (
+                    <>
+                        {/* Artists List */}
+                        {activeTab === 'artists' && (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[340px] overflow-y-auto p-2">
+                                {topArtists.map((artist, index) => (
+                                    <ArtistItem
+                                        key={artist.id}
+                                        onSelect={handleSelectArtist}
+                                        isSelected={isArtistSelected(artist.id)}
+                                        rank={index + 1}
+                                        showFollowers={false}
+                                        showGenres={false}
+                                        size="small"
+                                        bg="bg-spotify-gray-mid"
+                                    >
+                                        {artist}
+                                    </ArtistItem>
+                                ))}
+                            </div>
+                        )}
 
-                {/* Tracks List */}
-                {activeTab === 'tracks' && (
-                    <div className="flex flex-col gap-2 max-h-[340px] overflow-y-auto p-2">
-                        {topTracks.map((track, index) => (
-                            <TrackItem
-                                key={track.id}
-                                onSelect={handleSelectTrack}
-                                isSelected={isTrackSelected(track.id)}
-                                rank={index + 1}
-                                showDuration={false}
-                                showExplicit={false}
-                                bg="bg-spotify-gray-mid"
-                            >
-                                {track}
-                            </TrackItem>
-                        ))}
-                    </div>
+                        {/* Tracks List */}
+                        {activeTab === 'tracks' && (
+                            <div className="flex flex-col gap-2 max-h-[340px] overflow-y-auto p-2">
+                                {topTracks.map((track, index) => (
+                                    <TrackItem
+                                        key={track.id}
+                                        onSelect={handleSelectTrack}
+                                        isSelected={isTrackSelected(track.id)}
+                                        rank={index + 1}
+                                        showDuration={false}
+                                        showExplicit={false}
+                                        bg="bg-spotify-gray-mid"
+                                    >
+                                        {track}
+                                    </TrackItem>
+                                ))}
+                            </div>
+                        )}
+
+                    </>
                 )}
             </div>
         </section>

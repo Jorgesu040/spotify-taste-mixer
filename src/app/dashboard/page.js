@@ -43,7 +43,8 @@ export default function Dashboard() {
         handleTrackSelect,
         removeTrack,
         addFavoriteToPlaylist,
-        addTracksToPlaylist
+        addTracksToPlaylist,
+        isLoadingTracks
     } = usePlaylistContext()
 
     const { widgets, toggleWidget, reorderWidgets, isLoaded } = useWidgetManager()
@@ -189,6 +190,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                     <PlaylistPanel
                         tracks={selectedTracks}
+                        isLoading={isLoadingTracks}
                         onRemoveTrack={removeTrack}
                         popularityRange={popularityRange}
                         favorites={favorites}

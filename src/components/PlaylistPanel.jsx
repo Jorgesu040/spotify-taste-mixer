@@ -2,7 +2,7 @@
 
 import { ListMusic, Star, Trash2, User, Palette, Search, Music } from "lucide-react"
 import TrackItem from "./widgets/items/TrackItem"
-import SpotifyBtn from "./SpotifyBtn"
+import LoadingSpinner from "./ui/loading-spinner"
 
 // Get source badge info
 function getSourceBadge(source) {
@@ -25,6 +25,7 @@ function getSourceBadge(source) {
 
 export default function PlaylistPanel({
     tracks = [],
+    isLoading = false,
     onRemoveTrack,
     popularityRange = [0, 100],
     favorites = [],
@@ -53,14 +54,23 @@ export default function PlaylistPanel({
             </div>
 
             {/* Track list */}
-            {tracks.length === 0 ? (
+            {isLoading && tracks.length === 0 ? (
+                <div className="flex justify-center items-center py-20">
+                    <LoadingSpinner />
+                </div>
+            ) : tracks.length === 0 ? (
                 <div className="text-center py-8 text-spotify-gray-light">
                     <ListMusic size={48} className="mx-auto mb-2 opacity-50" />
                     <p>No hay canciones seleccionadas</p>
                     <p className="text-sm">Usa los widgets para añadir música</p>
                 </div>
             ) : (
-                <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
+                <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-1 relative min-h-[200px]">
+                    {isLoading && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 backdrop-blur-sm rounded-lg">
+                            <LoadingSpinner />
+                        </div>
+                    )}
                     {tracks.map((track, index) => {
                         const sourceBadge = getSourceBadge(track.source)
                         const outOfRange = isOutOfPopularityRange(track)
@@ -71,6 +81,7 @@ export default function PlaylistPanel({
                                     bg="bg-spotify-gray-mid"
                                     onSelect={() => { }}
                                     isSelected={false}
+                                    showInfo={false}
                                 >
                                     {track}
                                 </TrackItem>
@@ -99,8 +110,8 @@ export default function PlaylistPanel({
                                                 onToggleFavorite?.(track)
                                             }}
                                             className={`p-1.5 rounded-full transition-colors ${isFavorite(track.id)
-                                                    ? 'bg-yellow-500 text-black'
-                                                    : 'bg-spotify-gray-dark/80 text-spotify-gray-light hover:text-yellow-500'
+                                                ? 'bg-yellow-500 text-black'
+                                                : 'bg-spotify-gray-dark/80 text-spotify-gray-light hover:text-yellow-500'
                                                 }`}
                                             title={isFavorite(track.id) ? 'Quitar de favoritos' : 'Añadir a favoritos'}
                                         >

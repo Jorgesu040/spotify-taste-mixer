@@ -7,10 +7,12 @@ import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { fetchUserPlaylists, fetchPlaylistTracks } from '@/lib/spotifyFetch';
 import TextSpanWrapper from '@/components/TextSpanWrapper';
 import PlaylistItem from '@/components/widgets/items/PlaylistItem';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 export default function PlaylistSelectorModal({ isOpen, onClose, onSelect }) {
     const [playlists, setPlaylists] = useState([]);
     const [importingId, setImportingId] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (isOpen) {
@@ -19,11 +21,14 @@ export default function PlaylistSelectorModal({ isOpen, onClose, onSelect }) {
     }, [isOpen]);
 
     const loadPlaylists = async () => {
+        setIsLoading(true);
         try {
             const items = await fetchUserPlaylists(50);
             setPlaylists(items || []);
         } catch (error) {
             console.error('Error loading playlists:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -67,7 +72,9 @@ export default function PlaylistSelectorModal({ isOpen, onClose, onSelect }) {
 
                         {/* Content */}
                         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-                            {playlists.length === 0 ? (
+                            {isLoading ? (
+                                <LoadingSpinner className="h-full" />
+                            ) : playlists.length === 0 ? (
                                 <div className="text-center py-20 text-gray-400">
                                     No se encontraron playlists públicas.
                                 </div>

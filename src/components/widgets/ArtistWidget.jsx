@@ -4,6 +4,7 @@ import { useState } from "react"
 import SearchBar from "@/components/SearchBar"
 import { fetchSearchArtist } from "@/lib/spotifyFetch"
 import ArtistItem from "@/components/widgets/items/ArtistItem"
+import LoadingSpinner from "@/components/ui/loading-spinner"
 import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { Search, User } from "lucide-react"
 
@@ -12,6 +13,7 @@ import { motion } from "motion/react"
 export default function ArtistWidget({ onSelect, selectedItems = [], className, maxItems = 5, onLimitError }) {
 
     const [response, setResponse] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const items = Array.isArray(selectedItems) ? selectedItems : []
     const isSelected = (id) => items.find(artist => artist.id === id) !== undefined
     const canAddMore = items.length < maxItems
@@ -52,11 +54,14 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
             <SearchBar
                 persistKey="artist-query"
                 setResponse={setResponse}
+                setIsLoading={setIsLoading}
                 fnToCall={fetchSearchArtist}
             />
 
             <div className="flex-1 flex flex-col">
-                {response.length === 0 ? (
+                {isLoading ? (
+                    <LoadingSpinner className="flex-1" />
+                ) : response.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center text-spotify-gray-light">
                         <Search size={48} className="opacity-50 mb-2" />
                         <p>Escribe para buscar</p>

@@ -21,9 +21,6 @@ export function useWidgetManager() {
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
-                // Merge with default to ensure no missing ids if we update code later
-                // This simple version just trusts localstorage if present, 
-                // but in prod we'd want to merge/validate.
                 setWidgets(parsed);
             } catch (e) {
                 setWidgets(DEFAULT_WIDGETS);

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import SearchBar from '@/components/SearchBar'
 import Fuse from 'fuse.js'
 import generes from '@/generes/generes.json'
@@ -42,9 +42,8 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
         return new Fuse(list, options)
     }, [])
 
-    // function passed to SearchBar; returns an array of strings (genre names)
-    const fnToCall = async (query) => {
-        if (!query) return []
+    const fnToCall = useCallback(async (query) => {
+        if (!query || query.length < 3) return []
         try {
             const results = fuse.search(query)
             // r.item is already a string from generes.json
@@ -53,7 +52,7 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
             console.error('Fuse search error', e)
             return []
         }
-    }
+    }, [fuse])
 
     const containerVariants = {
         hidden: { opacity: 1 },
@@ -91,8 +90,8 @@ export default function GenreWidget({ onSelect, selectedItems, className, maxIte
                         animate="visible"
                         className="flex flex-wrap content-start gap-2 mt-4 max-h-[350px] overflow-y-auto p-2"
                     >
-                        {response.map((genre, idx) => (
-                            <GenreItem key={`${genre}-${idx}`} onSelect={() => handleSelect(genre)} isSelected={isSelected(genre)}>
+                        {response.map((genre) => (
+                            <GenreItem key={genre} onSelect={() => handleSelect(genre)} isSelected={isSelected(genre)}>
                                 {genre}
                             </GenreItem>
                         ))}

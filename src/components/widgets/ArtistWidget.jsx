@@ -17,7 +17,6 @@ export default function ArtistWidget({ onSelect, selectedItems = [], className, 
     const canAddMore = items.length < maxItems
 
     const handleSelect = (artist) => {
-        // ... (rest is same)
         // Case 1: deselecting
         if (isSelected(artist.id)) {
             const newSelected = items.filter(item => item.id !== artist.id)

@@ -10,7 +10,6 @@ import TextSpanWrapper from "@/components/TextSpanWrapper"
 import { motion } from "motion/react"
 
 export default function DecadeWidget({ onSelect, selectedItems = [], className }) {
-    // ...
     const [startDecade, setStartDecade] = useState("")
     const [endDecade, setEndDecade] = useState("")
     const [results, setResults] = useState([])

@@ -17,7 +17,6 @@ export default function TrackWidget({ onSelect, selectedItems = [], className, m
     const canAddMore = items.length < maxItems
 
     const handleSelect = (track) => {
-        // ...
         // Case 1: deselecting
         if (isSelected(track.id)) {
             const newSelected = items.filter(item => item.id !== track.id)

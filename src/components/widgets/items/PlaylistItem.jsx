@@ -22,7 +22,7 @@ export default function PlaylistItem({
             className={`flex items-center gap-3 p-2 rounded-lg ${bg} hover:bg-spotify-gray-light/20 transition-all cursor-pointer w-full text-left group border border-transparent hover:border-white/10`}
         >
             {/* Imagen */}
-            <div className="relative w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-spotify-gray-mid shadow-lg">
+            <div className="relative w-12 h-12 rounded overflow-hidden shrink-0 bg-spotify-gray-mid shadow-lg">
                 {playlist.images?.[0]?.url ? (
                     <Image
                         src={playlist.images[0].url}

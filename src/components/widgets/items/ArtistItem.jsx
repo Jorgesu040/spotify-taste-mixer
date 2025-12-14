@@ -60,7 +60,7 @@ export default function ArtistItem({
                         <User size={isSmall ? 24 : 48} className="text-spotify-gray-light" />
                     </div>
                 )}
-                <div className={`absolute bottom-0 right-0 z-20 ${isSmall ? 'p-2' : 'p-4'}`}>
+                <div className="absolute bottom-0 right-0 z-20">
                     <InfoButton makeSmall={isSmall} item={artist} className="text-white bg-black/60 hover:bg-black/80 shadow-lg" />
                 </div>
             </div>

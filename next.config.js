@@ -3,7 +3,9 @@ const nextConfig = {
     images: {
         domains: [
             'mosaic.scdn.co',
-            // add other domains here if needed
+            'i.scdn.co',
+            'image-cdn-ak.spotifycdn.com',
+            'image-cdn-fa.spotifycdn.com', // Added new Spotify CDN domain
         ],
         remotePatterns: [
             {
